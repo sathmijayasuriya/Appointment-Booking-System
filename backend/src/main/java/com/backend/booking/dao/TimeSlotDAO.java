@@ -71,7 +71,7 @@ public class TimeSlotDAO {
         jdbcTemplate.update(SQLConstants.MARK_TIME_SLOT_INACTIVE, slotId);
     }
     public void updateAppointmentSlotId(Long appointmentId, Long newSlotId) {
-        jdbcTemplate.update("UPDATE appointments SET slot_id = ? WHERE appointment_id = ?", newSlotId, appointmentId);
+        jdbcTemplate.update(SQLConstants.UPDATE_APPOINTMENT_SLOT_ID, newSlotId, appointmentId);
     }
 
     // RowMapper for Appointment
