@@ -41,6 +41,9 @@ public class TimeSlotService {
         // Check if the time slot has any bookings
         List<Appointment> appointments = timeSlotDAO.findAppointmentsBySlotId(timeSlotDTO.getSlotId());
         if (!appointments.isEmpty()) {
+            // Mark the old time slot as INACTIVE
+            timeSlotDAO.markTimeSlotAsInactive(timeSlotDTO.getSlotId());
+
             // Add the new time slot
             TimeSlot newTimeSlot = new TimeSlot(
                     null,
@@ -51,23 +54,18 @@ public class TimeSlotService {
             );
             timeSlotDAO.addTimeSlot(newTimeSlot);
 
-            // Update appointments to point to the new time slot
+            // Update the appointments to point to the new time slot and set status to PENDING_RESCHEDULE
             for (Appointment appointment : appointments) {
                 timeSlotDAO.updateAppointmentStatus(
                         appointment.getAppointmentId(),
                         "PENDING_RESCHEDULE",
-                        appointment.getSlotId() // Set previous_slot_id to the current slot ID
+                        appointment.getSlotId() // Set previous_slot_id to the old slot ID
                 );
-
-                // Update the slot_id to point to the new time slot
-                timeSlotDAO.updateAppointmentSlotId(
+                timeSlotDAO.updateAppointmentSlot(
                         appointment.getAppointmentId(),
-                        newTimeSlot.getSlotId()
+                        newTimeSlot.getSlotId() // Update slot_id to the new time slot
                 );
             }
-
-            // Mark the old time slot as INACTIVE
-            timeSlotDAO.markTimeSlotInactive(timeSlotDTO.getSlotId());
         } else {
             // If there are no bookings, simply update the time slot
             existingTimeSlot.setDate(timeSlotDTO.getDate());

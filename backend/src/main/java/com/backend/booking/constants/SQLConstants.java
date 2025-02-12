@@ -11,7 +11,8 @@ public class SQLConstants {
     public static final String UPDATE_APPOINTMENT_STATUS = "UPDATE appointments SET status = ?, previous_slot_id = ? WHERE appointment_id = ?";
 
     // New query to mark a time slot as INACTIVE
-    public static final String MARK_TIME_SLOT_INACTIVE = "UPDATE time_slots SET status = 'INACTIVE' WHERE slot_id = ?";
-    public static final String UPDATE_APPOINTMENT_SLOT_ID = "UPDATE appointments SET slot_id = ? WHERE appointment_id = ?";
+    // New queries for marking time slots as INACTIVE and updating appointments
+    public static final String MARK_TIME_SLOT_AS_INACTIVE = "UPDATE time_slots SET status = 'INACTIVE' WHERE slot_id = ?";
+    public static final String UPDATE_APPOINTMENT_SLOT = "UPDATE appointments SET slot_id = ? WHERE appointment_id = ?";
 
 }

@@ -66,13 +66,16 @@ public class TimeSlotDAO {
         jdbcTemplate.update(SQLConstants.UPDATE_APPOINTMENT_STATUS, status, previousSlotId, appointmentId);
     }
 
-    // Delete a time slot
-    public void markTimeSlotInactive(Long slotId) {
-        jdbcTemplate.update(SQLConstants.MARK_TIME_SLOT_INACTIVE, slotId);
+    // Mark a time slot as INACTIVE
+    public void markTimeSlotAsInactive(Long slotId) {
+        jdbcTemplate.update(SQLConstants.MARK_TIME_SLOT_AS_INACTIVE, slotId);
     }
-    public void updateAppointmentSlotId(Long appointmentId, Long newSlotId) {
-        jdbcTemplate.update(SQLConstants.UPDATE_APPOINTMENT_SLOT_ID, newSlotId, appointmentId);
+
+    // Update the slot_id in the appointments table
+    public void updateAppointmentSlot(Long appointmentId, Long newSlotId) {
+        jdbcTemplate.update(SQLConstants.UPDATE_APPOINTMENT_SLOT, newSlotId, appointmentId);
     }
+
 
     // RowMapper for Appointment
     private static class AppointmentRowMapper implements RowMapper<Appointment> {
