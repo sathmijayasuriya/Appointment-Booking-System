@@ -40,7 +40,7 @@ public class TimeSlotController {
     }
 
     // Get all time slots
-    @GetMapping
+    @GetMapping("/getAllSlots")
     public ResponseEntity<List<TimeSlot>> getAllTimeSlots() {
         return ResponseEntity.ok(timeSlotService.getAllTimeSlots());
     }
