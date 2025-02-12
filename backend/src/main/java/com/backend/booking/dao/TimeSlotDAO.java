@@ -56,25 +56,24 @@ public class TimeSlotDAO {
             );
         }
     }
+
+    //edit
+    
     // Find appointments by slot ID
     public List<Appointment> findAppointmentsBySlotId(Long slotId) {
         return jdbcTemplate.query(SQLConstants.FIND_APPOINTMENTS_BY_SLOT_ID, new AppointmentRowMapper(), slotId);
     }
 
-    // Update appointment status
-    public void updateAppointmentStatus(Long appointmentId, String status, Long previousSlotId) {
-        jdbcTemplate.update(SQLConstants.UPDATE_APPOINTMENT_STATUS, status, previousSlotId, appointmentId);
+    // Update time slot status
+    public void updateTimeSlotStatus(Long slotId, String status) {
+        jdbcTemplate.update(SQLConstants.UPDATE_TIME_SLOT_STATUS, status, slotId);
     }
 
-    // Mark a time slot as INACTIVE
-    public void markTimeSlotAsInactive(Long slotId) {
-        jdbcTemplate.update(SQLConstants.MARK_TIME_SLOT_AS_INACTIVE, slotId);
+    // Update appointment slot ID, previous slot ID, and status
+    public void updateAppointmentSlotAndStatus(Long appointmentId, Long newSlotId, Long previousSlotId, String status) {
+        jdbcTemplate.update(SQLConstants.UPDATE_APPOINTMENT_SLOT_AND_STATUS, newSlotId, previousSlotId, status, appointmentId);
     }
 
-    // Update the slot_id in the appointments table
-    public void updateAppointmentSlot(Long appointmentId, Long newSlotId) {
-        jdbcTemplate.update(SQLConstants.UPDATE_APPOINTMENT_SLOT, newSlotId, appointmentId);
-    }
 
 
     // RowMapper for Appointment

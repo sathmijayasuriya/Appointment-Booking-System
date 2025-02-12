@@ -32,6 +32,7 @@ public class TimeSlotService {
     }
 
     // Update an existing time slot
+    // Update an existing time slot
     public void updateTimeSlot(TimeSlotDTO timeSlotDTO) {
         TimeSlot existingTimeSlot = timeSlotDAO.findTimeSlotById(timeSlotDTO.getSlotId());
         if (existingTimeSlot == null) {
@@ -42,7 +43,7 @@ public class TimeSlotService {
         List<Appointment> appointments = timeSlotDAO.findAppointmentsBySlotId(timeSlotDTO.getSlotId());
         if (!appointments.isEmpty()) {
             // Mark the old time slot as INACTIVE
-            timeSlotDAO.markTimeSlotAsInactive(timeSlotDTO.getSlotId());
+            timeSlotDAO.updateTimeSlotStatus(timeSlotDTO.getSlotId(), "INACTIVE");
 
             // Add the new time slot
             TimeSlot newTimeSlot = new TimeSlot(
@@ -54,16 +55,13 @@ public class TimeSlotService {
             );
             timeSlotDAO.addTimeSlot(newTimeSlot);
 
-            // Update the appointments to point to the new time slot and set status to PENDING_RESCHEDULE
+            // Update appointments to point to the new time slot and set status to PENDING_RESCHEDULE
             for (Appointment appointment : appointments) {
-                timeSlotDAO.updateAppointmentStatus(
+                timeSlotDAO.updateAppointmentSlotAndStatus(
                         appointment.getAppointmentId(),
-                        "PENDING_RESCHEDULE",
-                        appointment.getSlotId() // Set previous_slot_id to the old slot ID
-                );
-                timeSlotDAO.updateAppointmentSlot(
-                        appointment.getAppointmentId(),
-                        newTimeSlot.getSlotId() // Update slot_id to the new time slot
+                        newTimeSlot.getSlotId(), // New slot ID
+                        appointment.getSlotId(),    // Previous slot ID
+                        "PENDING_RESCHEDULE"       // New status
                 );
             }
         } else {
@@ -74,6 +72,7 @@ public class TimeSlotService {
             timeSlotDAO.updateTimeSlot(existingTimeSlot);
         }
     }
+
     // Get all time slots
     public List<TimeSlot> getAllTimeSlots() {
         return timeSlotDAO.findAllTimeSlots();
