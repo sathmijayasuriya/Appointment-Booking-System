@@ -2,6 +2,7 @@ package com.backend.booking.service;
 
 import com.backend.booking.dao.TimeSlotDAO;
 import com.backend.booking.dto.TimeSlotDTO;
+import com.backend.booking.model.Appointment;
 import com.backend.booking.model.TimeSlot;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -32,25 +33,49 @@ public class TimeSlotService {
 
     // Update an existing time slot
     public void updateTimeSlot(TimeSlotDTO timeSlotDTO) {
-        // Check for duplicate time slot (excluding the current slot being updated)
-        if (timeSlotDAO.isTimeSlotExists(timeSlotDTO.getDate(), timeSlotDTO.getStartTime(), timeSlotDTO.getEndTime())) {
-            TimeSlot existingTimeSlot = timeSlotDAO.findTimeSlotById(timeSlotDTO.getSlotId());
-            if (!existingTimeSlot.getDate().equals(timeSlotDTO.getDate()) ||
-                    !existingTimeSlot.getStartTime().equals(timeSlotDTO.getStartTime()) ||
-                    !existingTimeSlot.getEndTime().equals(timeSlotDTO.getEndTime())) {
-                throw new IllegalArgumentException("A time slot with the same date, start time, and end time already exists.");
-            }
+        TimeSlot existingTimeSlot = timeSlotDAO.findTimeSlotById(timeSlotDTO.getSlotId());
+        if (existingTimeSlot == null) {
+            throw new IllegalArgumentException("Time slot not found.");
         }
-        TimeSlot timeSlot = timeSlotDAO.findTimeSlotById(timeSlotDTO.getSlotId());
-        if (timeSlot != null) {
-            timeSlot.setDate(timeSlotDTO.getDate());
-            timeSlot.setStartTime(timeSlotDTO.getStartTime());
-            timeSlot.setEndTime(timeSlotDTO.getEndTime());
-            timeSlot.setStatus(timeSlotDTO.getStatus());
-            timeSlotDAO.updateTimeSlot(timeSlot);
+
+        // Check if the time slot has any bookings
+        List<Appointment> appointments = timeSlotDAO.findAppointmentsBySlotId(timeSlotDTO.getSlotId());
+        if (!appointments.isEmpty()) {
+            // Add the new time slot
+            TimeSlot newTimeSlot = new TimeSlot(
+                    null,
+                    timeSlotDTO.getDate(),
+                    timeSlotDTO.getStartTime(),
+                    timeSlotDTO.getEndTime(),
+                    "AVAILABLE"
+            );
+            timeSlotDAO.addTimeSlot(newTimeSlot);
+
+            // Update appointments to point to the new time slot
+            for (Appointment appointment : appointments) {
+                timeSlotDAO.updateAppointmentStatus(
+                        appointment.getAppointmentId(),
+                        "PENDING_RESCHEDULE",
+                        appointment.getSlotId() // Set previous_slot_id to the current slot ID
+                );
+
+                // Update the slot_id to point to the new time slot
+                timeSlotDAO.updateAppointmentSlotId(
+                        appointment.getAppointmentId(),
+                        newTimeSlot.getSlotId()
+                );
+            }
+
+            // Mark the old time slot as INACTIVE
+            timeSlotDAO.markTimeSlotInactive(timeSlotDTO.getSlotId());
+        } else {
+            // If there are no bookings, simply update the time slot
+            existingTimeSlot.setDate(timeSlotDTO.getDate());
+            existingTimeSlot.setStartTime(timeSlotDTO.getStartTime());
+            existingTimeSlot.setEndTime(timeSlotDTO.getEndTime());
+            timeSlotDAO.updateTimeSlot(existingTimeSlot);
         }
     }
-
     // Get all time slots
     public List<TimeSlot> getAllTimeSlots() {
         return timeSlotDAO.findAllTimeSlots();
