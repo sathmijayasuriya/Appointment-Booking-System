@@ -6,10 +6,11 @@ import com.backend.booking.model.TimeSlot;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
+import org.springframework.jdbc.support.GeneratedKeyHolder;
+import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.List;
@@ -25,10 +26,20 @@ public class TimeSlotDAO {
         return !timeSlots.isEmpty();
     }
 
-    public void addTimeSlot(TimeSlot timeSlot) {
-        jdbcTemplate.update(SQLConstants.INSERT_TIME_SLOT,
-                timeSlot.getDate(), timeSlot.getStartTime(), timeSlot.getEndTime(), timeSlot.getStatus());
+    public Long addTimeSlot(TimeSlot timeSlot) {
+        KeyHolder keyHolder = new GeneratedKeyHolder();
+        jdbcTemplate.update(connection -> {
+            PreparedStatement ps = connection.prepareStatement(SQLConstants.INSERT_TIME_SLOT, Statement.RETURN_GENERATED_KEYS);
+            ps.setDate(1, Date.valueOf(timeSlot.getDate()));
+            ps.setTime(2, Time.valueOf(timeSlot.getStartTime()));
+            ps.setTime(3, Time.valueOf(timeSlot.getEndTime()));
+            ps.setString(4, timeSlot.getStatus());
+            return ps;
+        }, keyHolder);
+
+        return keyHolder.getKey().longValue(); // Return generated slot_id
     }
+
 
     public void updateTimeSlot(TimeSlot timeSlot) {
         jdbcTemplate.update(SQLConstants.UPDATE_TIME_SLOT,

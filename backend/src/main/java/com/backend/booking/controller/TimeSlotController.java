@@ -20,8 +20,8 @@ public class TimeSlotController {
     @PostMapping("/addTimeSlot")
     public ResponseEntity<?> addTimeSlot(@RequestBody TimeSlotDTO timeSlotDTO) {
         try {
-            timeSlotService.addTimeSlot(timeSlotDTO);
-            return ResponseEntity.ok("Time slot added successfully");
+           Long slotId = timeSlotService.addTimeSlot(timeSlotDTO);
+            return ResponseEntity.ok("Time slot added successfully with ID: "+slotId);
         } catch (IllegalArgumentException e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         }

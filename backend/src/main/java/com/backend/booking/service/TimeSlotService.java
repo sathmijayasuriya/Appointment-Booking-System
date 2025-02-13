@@ -15,7 +15,7 @@ public class TimeSlotService {
     private TimeSlotDAO timeSlotDAO;
 
     // Add a new time slot
-    public void addTimeSlot(TimeSlotDTO timeSlotDTO) {
+    public Long addTimeSlot(TimeSlotDTO timeSlotDTO) {
         // Check for duplicate time slot
         if (timeSlotDAO.isTimeSlotExists(timeSlotDTO.getDate(), timeSlotDTO.getStartTime(), timeSlotDTO.getEndTime())) {
             throw new IllegalArgumentException("A time slot with the same date, start time, and end time already exists.");
@@ -28,10 +28,9 @@ public class TimeSlotService {
                 timeSlotDTO.getEndTime(),
                 "AVAILABLE" // Default status
         );
-        timeSlotDAO.addTimeSlot(timeSlot);
+        return timeSlotDAO.addTimeSlot(timeSlot);
     }
 
-    // Update an existing time slot
     // Update an existing time slot
     public void updateTimeSlot(TimeSlotDTO timeSlotDTO) {
         TimeSlot existingTimeSlot = timeSlotDAO.findTimeSlotById(timeSlotDTO.getSlotId());
@@ -39,33 +38,26 @@ public class TimeSlotService {
             throw new IllegalArgumentException("Time slot not found.");
         }
 
-        // Check if the time slot has any bookings
         List<Appointment> appointments = timeSlotDAO.findAppointmentsBySlotId(timeSlotDTO.getSlotId());
         if (!appointments.isEmpty()) {
-            // Mark the old time slot as INACTIVE
+            // Mark the old slot as INACTIVE
             timeSlotDAO.updateTimeSlotStatus(timeSlotDTO.getSlotId(), "INACTIVE");
 
-            // Add the new time slot with the same status as the old one
-            TimeSlot newTimeSlot = new TimeSlot(
-                    null,
-                    timeSlotDTO.getDate(),
-                    timeSlotDTO.getStartTime(),
-                    timeSlotDTO.getEndTime(),
-                    existingTimeSlot.getStatus() // Retain the same status (e.g., BOOKED)
-            );
-            timeSlotDAO.addTimeSlot(newTimeSlot);
+            // Insert new time slot and get its ID
+            TimeSlot newTimeSlot = new TimeSlot(null, timeSlotDTO.getDate(), timeSlotDTO.getStartTime(), timeSlotDTO.getEndTime(), "BOOKED");
+            Long newSlotId = timeSlotDAO.addTimeSlot(newTimeSlot); // Get new slot ID
 
-            // Update appointments to point to the new time slot and set status to PENDING_RESCHEDULE
+            // Update appointments to use new slot
             for (Appointment appointment : appointments) {
                 timeSlotDAO.updateAppointmentSlotAndStatus(
                         appointment.getAppointmentId(),
-                        newTimeSlot.getSlotId(), // New slot ID
-                        appointment.getSlotId(),    // Previous slot ID
-                        "PENDING_RESCHEDULE"       // New status
+                        newSlotId, // Set new slot ID
+                        appointment.getSlotId(), // Store previous slot ID
+                        "BOOKED"
                 );
             }
         } else {
-            // If there are no bookings, simply update the time slot
+            // If no bookings, simply update the slot
             existingTimeSlot.setDate(timeSlotDTO.getDate());
             existingTimeSlot.setStartTime(timeSlotDTO.getStartTime());
             existingTimeSlot.setEndTime(timeSlotDTO.getEndTime());
