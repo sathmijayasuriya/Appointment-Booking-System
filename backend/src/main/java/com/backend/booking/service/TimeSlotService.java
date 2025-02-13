@@ -53,7 +53,7 @@ public class TimeSlotService {
                         appointment.getAppointmentId(),
                         newSlotId, // Set new slot ID
                         appointment.getSlotId(), // Store previous slot ID
-                        "BOOKED"
+                        "PENDING_RESCHEDULE"
                 );
             }
         } else {
