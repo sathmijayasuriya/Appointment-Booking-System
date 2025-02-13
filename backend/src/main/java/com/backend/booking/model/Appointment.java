@@ -19,5 +19,4 @@ public class Appointment {
     private Long previousSlotId;
     private LocalDateTime createdAt;
 
-
 }

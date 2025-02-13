@@ -57,7 +57,7 @@ public class TimeSlotService {
                 );
             }
         } else {
-            // If no bookings, simply update the slot
+            // If no bookings, just update the slot
             existingTimeSlot.setDate(timeSlotDTO.getDate());
             existingTimeSlot.setStartTime(timeSlotDTO.getStartTime());
             existingTimeSlot.setEndTime(timeSlotDTO.getEndTime());

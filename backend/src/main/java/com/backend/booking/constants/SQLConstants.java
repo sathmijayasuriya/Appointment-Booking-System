@@ -12,4 +12,10 @@ public class SQLConstants {
     public static final String UPDATE_TIME_SLOT_STATUS = "UPDATE time_slots SET status = ? WHERE slot_id = ?";
 
 
+    //add appointment
+    public static final String INSERT_APPOINTMENT = "INSERT INTO appointments (user_id, slot_id, status) VALUES (?, ?, 'BOOKED')";
+    public static final String UPDATE_TIME_SLOT_STATUS_BOOKED = "UPDATE time_slots SET status = 'BOOKED' WHERE slot_id = ?";
+    public static final String FIND_USER_BY_EMAIL = "SELECT user_id FROM users WHERE email = ?";
+
+
 }
