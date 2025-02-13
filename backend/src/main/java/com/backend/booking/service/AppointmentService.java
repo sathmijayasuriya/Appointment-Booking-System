@@ -2,6 +2,7 @@ package com.backend.booking.service;
 
 import com.backend.booking.dao.AppointmentDAO;
 import com.backend.booking.dao.TimeSlotDAO;
+import com.backend.booking.dao.UserDAO;
 import com.backend.booking.dto.AppointmentDTO;
 import com.backend.booking.dto.AppointmentReqDTO;
 import com.backend.booking.dto.AppointmentResDTO;
@@ -17,8 +18,23 @@ import java.util.stream.Collectors;
 public class AppointmentService {
     @Autowired
     private AppointmentDAO appointmentDAO;
+
     @Autowired
-    private TimeSlotDAO timeSlotDAO;
+    private UserDAO userDAO;
+
+    public void bookAppointment(AppointmentReqDTO appointmentReqDTO) {
+        // Get user ID from email
+        Long userId = userDAO.findUserIdByEmail(appointmentReqDTO.getEmail());
+        if (userId == null) {
+            throw new IllegalArgumentException("User must be registered to book an appointment.");
+        }
+
+        // Add appointment
+        appointmentDAO.addAppointment(userId, appointmentReqDTO.getSlotId());
+
+        // Update time slot status
+        appointmentDAO.updateTimeSlotStatus(appointmentReqDTO.getSlotId());
+    }
 
 
 }

@@ -16,4 +16,13 @@ public class AppointmentController {
     @Autowired
     private AppointmentService appointmentService;
 
+    @PostMapping("/book")
+    public ResponseEntity<String> bookAppointment(@RequestBody AppointmentReqDTO appointmentReqDTO) {
+        try {
+            appointmentService.bookAppointment(appointmentReqDTO);
+            return ResponseEntity.ok("Appointment booked successfully.");
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
 }
