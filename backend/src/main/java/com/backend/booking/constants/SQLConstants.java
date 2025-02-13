@@ -11,4 +11,5 @@ public class SQLConstants {
     public static final String UPDATE_APPOINTMENT_SLOT_AND_STATUS = "UPDATE appointments SET slot_id = ?, previous_slot_id = ?, status = ? WHERE appointment_id = ?";
     public static final String UPDATE_TIME_SLOT_STATUS = "UPDATE time_slots SET status = ? WHERE slot_id = ?";
 
+
 }

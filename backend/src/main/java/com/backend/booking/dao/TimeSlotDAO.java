@@ -58,7 +58,7 @@ public class TimeSlotDAO {
     }
 
     //edit
-    
+
     // Find appointments by slot ID
     public List<Appointment> findAppointmentsBySlotId(Long slotId) {
         return jdbcTemplate.query(SQLConstants.FIND_APPOINTMENTS_BY_SLOT_ID, new AppointmentRowMapper(), slotId);
@@ -73,7 +73,6 @@ public class TimeSlotDAO {
     public void updateAppointmentSlotAndStatus(Long appointmentId, Long newSlotId, Long previousSlotId, String status) {
         jdbcTemplate.update(SQLConstants.UPDATE_APPOINTMENT_SLOT_AND_STATUS, newSlotId, previousSlotId, status, appointmentId);
     }
-
 
 
     // RowMapper for Appointment

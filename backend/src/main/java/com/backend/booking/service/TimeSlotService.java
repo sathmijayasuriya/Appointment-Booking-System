@@ -45,13 +45,13 @@ public class TimeSlotService {
             // Mark the old time slot as INACTIVE
             timeSlotDAO.updateTimeSlotStatus(timeSlotDTO.getSlotId(), "INACTIVE");
 
-            // Add the new time slot
+            // Add the new time slot with the same status as the old one
             TimeSlot newTimeSlot = new TimeSlot(
                     null,
                     timeSlotDTO.getDate(),
                     timeSlotDTO.getStartTime(),
                     timeSlotDTO.getEndTime(),
-                    "AVAILABLE"
+                    existingTimeSlot.getStatus() // Retain the same status (e.g., BOOKED)
             );
             timeSlotDAO.addTimeSlot(newTimeSlot);
 
