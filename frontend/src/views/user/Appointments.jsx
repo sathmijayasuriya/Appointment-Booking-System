@@ -8,18 +8,17 @@ import {
   Grid,
   Card,
   Typography,
+  Box,
+  IconButton,
 } from "@mui/material";
-import { LocalizationProvider, DatePicker } from "@mui/x-date-pickers";
+import { LocalizationProvider, DateCalendar } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import dayjs from "dayjs";
-import { Box } from "@mui/material";
-import { DateCalendar } from "@mui/x-date-pickers";
-import { IconButton } from "@mui/material";
 import { ChevronLeft, ChevronRight } from "@mui/icons-material";
 
 export default function Appointments() {
   const [selectedDate, setSelectedDate] = useState(dayjs());
-  const [selectedTime, setSelectedTime] = useState("10.00am");
+  const [selectedTime, setSelectedTime] = useState("10:00 - 10:30");
   const [formData, setFormData] = useState({
     name: "Sathmi Jayasuriya",
     email: "sathmijayasuriya@gmail.com",
@@ -27,30 +26,43 @@ export default function Appointments() {
   });
   const [currentMonth, setCurrentMonth] = useState(dayjs("2025-01-01"));
 
-  const timeSlots = [
-    "9.00am",
-    "9.30am",
-    "10.00am",
-    "10.30am",
-    "11.00am",
-    "11.30am",
-    "12.00pm",
-    "12.30pm",
-    "2.00pm",
-    "2.30pm",
-    "3.00pm",
-    "3.30pm",
-    "4.00pm",
-    "4.30pm",
-    "5.00pm",
-  ];
-
   const handleChange = (event) => {
     setFormData({ ...formData, [event.target.name]: event.target.value });
   };
 
   const handleMonthChange = (newMonth) => {
     setCurrentMonth(newMonth);
+  };
+
+  const shouldDisableDate = (date) => {
+    return date.isBefore(dayjs(), "day") && date.year() === dayjs().year();
+  };
+
+  const generateTimeSlots = () => {
+    const slots = [];
+    for (let hour = 9; hour < 18; hour++) {
+      slots.push(`${hour}:00 - ${hour}:30`);
+      slots.push(`${hour}:30 - ${hour + 1}:00`);
+    }
+    return slots;
+  };
+
+  const timeSlots = generateTimeSlots();
+
+  const handleBooking = () => {
+    if (!formData.name || !formData.email || !formData.phone) {
+      alert("Please fill in all fields.");
+      return;
+    }
+    if (!/^\d{10}$/.test(formData.phone)) {
+      alert("Please enter a valid 10-digit phone number.");
+      return;
+    }
+    if (!/\S+@\S+\.\S+/.test(formData.email)) {
+      alert("Please enter a valid email address.");
+      return;
+    }
+    console.log("Booking confirmed:", { selectedDate, selectedTime, formData });
   };
 
   return (
@@ -61,14 +73,14 @@ export default function Appointments() {
           <Box
             sx={{
               width: 500,
-              height: 700,
+              height: 600,
               p: 2,
               borderRadius: 2,
               boxShadow: 2,
               bgcolor: "white",
             }}
           >
-            <Typography sx={{ fontWeight: "bold", mb: 1 }}>
+            <Typography sx={{ fontWeight: "bold", mb: 1, textAlign: "center" }}>
               Select Date
             </Typography>
 
@@ -80,13 +92,17 @@ export default function Appointments() {
               sx={{ mb: 2 }}
             >
               <IconButton
-                onClick={() =>
-                  handleMonthChange(currentMonth.subtract(2, "month"))
-                }
+                onClick={() => handleMonthChange(currentMonth.subtract(1, "month"))}
               >
                 <ChevronLeft />
               </IconButton>
-              <Typography>{currentMonth.format("MMMM YYYY")}</Typography>
+
+              <Typography
+                sx={{ flexGrow: 1, textAlign: "center", fontWeight: "bold" }}
+              >
+                {currentMonth.format("MMMM YYYY")}
+              </Typography>
+
               <IconButton
                 onClick={() => handleMonthChange(currentMonth.add(1, "month"))}
               >
@@ -94,41 +110,28 @@ export default function Appointments() {
               </IconButton>
             </Box>
 
-            {/* Date Calendar */}
             <LocalizationProvider dateAdapter={AdapterDayjs}>
               <DateCalendar
                 value={selectedDate}
                 onChange={(newValue) => setSelectedDate(newValue)}
                 disableHighlightToday
-                disablePast 
-                shouldDisableDate={(date) => {
-                  return false;
-                }}
+                shouldDisableDate={shouldDisableDate}
                 views={["day"]}
                 sx={{
-                    width: "100%", 
-                    height:"1000",
-                    overflow: "hidden", 
-                    "& .MuiPickersCalendarHeader-root": {
-                      fontSize: "1.2rem", 
-                    },
-                    "& .MuiPickersDay-root": {
-                      fontSize: "1.2rem", 
-                      width: 48, // Adjusts day button width
-                      height: 48, 
-                    },
-                    "& .MuiDayCalendar-weekDayLabel": {
-                      fontSize: "1.1rem", 
-                    },
-                    "& .Mui-selected": {
-                      border: "2px solid #0d47a1",
-                      backgroundColor: "transparent",
-                      color: "#0d47a1",
-                    },
-                    "& .MuiPickersDay-root.Mui-disabled": {
-                      opacity: 0.5,
-                    },
-                  }}
+                  width: "100%",
+                  height: "900",
+                  overflow: "hidden",
+                  "& .MuiPickersCalendarHeader-root": { fontSize: "1.2rem" },
+                  "& .MuiPickersDay-root": { fontSize: "1.2rem", width: 48, height: 48 },
+                  "& .MuiDayCalendar-root": { height: "100%", minHeight: 350 },
+                  "& .MuiDayCalendar-weekDayLabel": { fontSize: "1.1rem" },
+                  "& .Mui-selected": {
+                    border: "2px solid #0d47a1",
+                    backgroundColor: "transparent",
+                    color: "#0d47a1",
+                  },
+                  "& .MuiPickersDay-root.Mui-disabled": { opacity: 0.5, overflow: "hidden" },
+                }}
               />
             </LocalizationProvider>
           </Box>
@@ -191,6 +194,7 @@ export default function Appointments() {
                   color="primary"
                   sx={{ marginTop: 2 }}
                   fullWidth
+                  onClick={handleBooking}
                 >
                   Book Now
                 </Button>
