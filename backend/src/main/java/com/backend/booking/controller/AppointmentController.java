@@ -3,6 +3,7 @@ package com.backend.booking.controller;
 
 import com.backend.booking.dto.AppointmentAdminResDTO;
 import com.backend.booking.dto.AppointmentReqDTO;
+import com.backend.booking.dto.AppointmentUserResDTO;
 import com.backend.booking.exceptions.UnauthorizedException;
 import com.backend.booking.service.AppointmentService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,5 +38,15 @@ public class AppointmentController {
             return ResponseEntity.status(HttpStatus.FORBIDDEN).body(e.getMessage());
         }
     }
+    @GetMapping("/user/allAppointments")
+    public ResponseEntity<?> getUserAppointments(@RequestParam String email) {
+        try {
+            List<AppointmentUserResDTO> appointments = appointmentService.getUserAppointments(email);
+            return ResponseEntity.ok(appointments);
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+        }
+    }
+
 
 }

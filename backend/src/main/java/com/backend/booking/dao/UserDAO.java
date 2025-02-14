@@ -27,6 +27,14 @@ public class UserDAO {
             return null;
         }
     }
+    public Long findUserIdByEmail(String email) {
+        try {
+            return jdbcTemplate.queryForObject(SQLConstants.FIND_BY_MAIL_USER, Long.class, email);
+        } catch (EmptyResultDataAccessException e) {
+            return null;
+        }
+    }
+
 
 
 }

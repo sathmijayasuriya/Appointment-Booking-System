@@ -18,7 +18,7 @@ public class SQLConstants {
     public static final String FIND_USER_BY_ID = "SELECT user_id FROM users WHERE user_id = ?";
     public static final String CHECK_TIME_SLOT = "SELECT status FROM time_slots WHERE slot_id = ?";
 
-    //view appointments
+    //view appointments by admin
     public static final String FIND_ALL_APPOINTMENTS =
             "SELECT a.appointment_id, a.user_id, u.name AS user_name, u.email AS user_email, " +
                     "a.slot_id, t.date, t.start_time, t.end_time, a.booking_for_name, a.booking_for_email, " +
@@ -26,6 +26,15 @@ public class SQLConstants {
                     "FROM appointments a " +
                     "JOIN users u ON a.user_id = u.user_id " +
                     "JOIN time_slots t ON a.slot_id = t.slot_id";
-public static final String FIND_BY_MAIL = "SELECT role FROM users WHERE email = ?";
+    public static final String FIND_BY_MAIL = "SELECT role FROM users WHERE email = ?";
 
+    //view appointments by user
+    public static final String FIND_APPOINTMENTS_BY_USER_ID =
+            "SELECT a.appointment_id, a.user_id, a.slot_id, t.date, t.start_time, t.end_time, " +
+                    "a.booking_for_name, a.booking_for_email, a.booking_for_contact, a.status, a.created_at " +
+                    "FROM appointments a " +
+                    "JOIN time_slots t ON a.slot_id = t.slot_id " +
+                    "WHERE a.user_id = ?";
+
+    public  static final String FIND_BY_MAIL_USER = "SELECT user_id FROM users WHERE email = ?";
 }

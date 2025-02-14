@@ -5,6 +5,7 @@ import com.backend.booking.dao.UserDAO;
 import com.backend.booking.dto.AppointmentAdminResDTO;
 import com.backend.booking.dto.AppointmentReqDTO;
 
+import com.backend.booking.dto.AppointmentUserResDTO;
 import com.backend.booking.exceptions.UnauthorizedException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -47,6 +48,15 @@ public class AppointmentService {
         }
 
         return appointmentDAO.getAllAppointments();
+    }
+    public List<AppointmentUserResDTO> getUserAppointments(String email) {
+        // Get user ID using email
+        Long userId = userDAO.findUserIdByEmail(email);
+        if (userId == null) {
+            throw new IllegalArgumentException("User not found.");
+        }
+
+        return appointmentDAO.getAppointmentsByUserId(userId);
     }
 
 }
