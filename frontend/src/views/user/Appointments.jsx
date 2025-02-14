@@ -60,7 +60,8 @@ export default function Appointments() {
         <Grid item xs={12} md={5}>
           <Box
             sx={{
-              width: 320,
+              width: 500,
+              height: 700,
               p: 2,
               borderRadius: 2,
               boxShadow: 2,
@@ -80,7 +81,7 @@ export default function Appointments() {
             >
               <IconButton
                 onClick={() =>
-                  handleMonthChange(currentMonth.subtract(1, "month"))
+                  handleMonthChange(currentMonth.subtract(2, "month"))
                 }
               >
                 <ChevronLeft />
@@ -99,31 +100,35 @@ export default function Appointments() {
                 value={selectedDate}
                 onChange={(newValue) => setSelectedDate(newValue)}
                 disableHighlightToday
-                disablePast // Disables all dates before the current date
+                disablePast 
                 shouldDisableDate={(date) => {
-                  // Add additional conditions if needed
-                  return false; // No additional dates are disabled
+                  return false;
                 }}
                 views={["day"]}
                 sx={{
-                  "& .Mui-selected": {
-                    bgcolor: "transparent",
-                    border: "2px solid #0d47a1",
-                    //   color: "#0d47a1",
-                  },
-                  "& .MuiPickersDay-root": {
-                    //   color: "#2e7d32",
-                    fontWeight: "bold",
-                  },
-                  "& .MuiPickersDay-root.Mui-selected": {
-                    backgroundColor: "transparent",
-                    border: "2px solid #0d47a1",
-                    color: "#0d47a1",
-                  },
-                  "& .MuiPickersDay-root.Mui-disabled": {
-                    opacity: 0.5,
-                  },
-                }}
+                    width: "100%", 
+                    height:"1000",
+                    overflow: "hidden", 
+                    "& .MuiPickersCalendarHeader-root": {
+                      fontSize: "1.2rem", 
+                    },
+                    "& .MuiPickersDay-root": {
+                      fontSize: "1.2rem", 
+                      width: 48, // Adjusts day button width
+                      height: 48, 
+                    },
+                    "& .MuiDayCalendar-weekDayLabel": {
+                      fontSize: "1.1rem", 
+                    },
+                    "& .Mui-selected": {
+                      border: "2px solid #0d47a1",
+                      backgroundColor: "transparent",
+                      color: "#0d47a1",
+                    },
+                    "& .MuiPickersDay-root.Mui-disabled": {
+                      opacity: 0.5,
+                    },
+                  }}
               />
             </LocalizationProvider>
           </Box>
