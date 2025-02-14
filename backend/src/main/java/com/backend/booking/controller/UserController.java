@@ -23,8 +23,9 @@ public class UserController {
     private AuthService authService;
     private static final Logger logger = LoggerFactory.getLogger(UserController.class);
 
-    // Register User
-    @PostMapping("/admin/register")
+
+    // Admin registration (requires adminEmail to validate)
+    @PostMapping("/register-admin")
     public ResponseEntity<UserResponseDTO> registerAdmin(@RequestBody UserRequestDTO userDTO,
                                                          @RequestParam String adminEmail) {
         // Ensure only an existing admin can register a new admin
@@ -36,6 +37,12 @@ public class UserController {
 
         // Set role as ADMIN explicitly
         userDTO.setRole("ADMIN");
+        UserResponseDTO response = authService.registerUser(userDTO);
+        return ResponseEntity.ok(response);
+    }
+    @PostMapping("/register")
+    public ResponseEntity<UserResponseDTO> registerUser(@RequestBody UserRequestDTO userDTO) {
+        // Register as a normal user (defaults to "USER" role)
         UserResponseDTO response = authService.registerUser(userDTO);
         return ResponseEntity.ok(response);
     }
