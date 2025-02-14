@@ -1,8 +1,8 @@
 import React from 'react'
 import { Box, CssBaseline, Grid2 } from "@mui/material";
 import { Outlet } from "react-router-dom";
-import Footer from '../components/Footers/Footer';
 import HeaderUser from '../components/Headers/HeaderUser';
+import Footer from '../components/Footers/Footer';
 
 export default function UserLayout() {
   return (
