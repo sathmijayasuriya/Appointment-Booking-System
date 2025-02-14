@@ -58,5 +58,7 @@ public class SQLConstants {
             "SELECT * FROM users WHERE email = ? AND password_hash = ?";
     public static final String FIND_USER_BY_ID_ALL =
             "SELECT * FROM users WHERE user_id = ?";
+    public static final String FIND_USER_PASSWORD_BY_EMAIL = "SELECT password FROM users WHERE email = ?";
+
 
 }

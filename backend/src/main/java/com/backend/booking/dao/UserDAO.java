@@ -93,5 +93,14 @@ public class UserDAO {
             );
         }
     }
+    // New method to fetch user password during login
+    public String findUserPasswordByEmail(String email) {
+        try {
+            return jdbcTemplate.queryForObject(SQLConstants.FIND_USER_PASSWORD_BY_EMAIL, String.class, email);
+        } catch (EmptyResultDataAccessException e) {
+            return null; // User not found
+        }
+    }
+
 
 }

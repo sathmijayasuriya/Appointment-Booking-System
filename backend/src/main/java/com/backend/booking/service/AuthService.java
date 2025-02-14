@@ -27,24 +27,37 @@ public class AuthService {
         if (userDTO.getRole() == null || userDTO.getRole().isEmpty()) {
             userDTO.setRole("USER");
         }
-        // Hash the password
         String hashedPassword = passwordEncoder.encode(userDTO.getPassword());
+        userDAO.registerUser(userDTO, hashedPassword);        // Store user details in DB
+        return userDAO.findUserByEmail(userDTO.getEmail());   // Retrieve and return the stored user details
 
-        // Store user details in DB
-        userDAO.registerUser(userDTO, hashedPassword);
-
-        // Retrieve and return the stored user details
-        return userDAO.findUserByEmail(userDTO.getEmail());
     }
 
     // Authenticate login
     public UserResLoginDTO login(UserReqLoginDTO loginDTO) {
-        // Validate credentials
-        UserResLoginDTO user = userDAO.authenticateUser(loginDTO.getEmail(), loginDTO.getPassword());
-        if (user == null) {
+        String storedHashedPassword = userDAO.findUserPasswordByEmail(loginDTO.getEmail());
+
+        if (storedHashedPassword == null) {
             throw new IllegalArgumentException("Invalid email or password.");
         }
-        return user;
+
+        // Compare entered plain password with stored hashed password using BCrypt
+        if (!passwordEncoder.matches(loginDTO.getPassword(), storedHashedPassword)) {
+            throw new IllegalArgumentException("Invalid email or password.");
+        }
+
+        // Fetch user details for response (excluding password)
+        UserResponseDTO user = userDAO.findUserByEmail(loginDTO.getEmail());
+
+        // Return login response with user details
+        return new UserResLoginDTO(
+                user.getUserId(),
+                user.getName(),
+                user.getEmail(),
+                user.getPhone(),
+                user.getRole(),
+                user.getCreatedAt()
+        );
     }
     public UserResponseDTO getUserByEmail(String email) {
         return userDAO.findUserByEmail(email);
