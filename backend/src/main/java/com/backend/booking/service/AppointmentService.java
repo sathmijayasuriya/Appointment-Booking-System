@@ -23,18 +23,22 @@ public class AppointmentService {
     private UserDAO userDAO;
 
     public void bookAppointment(AppointmentReqDTO appointmentReqDTO) {
+
+        String slotStatus = appointmentDAO.getTimeSlotStatus(appointmentReqDTO.getSlotId());
+        if (!"AVAILABLE".equals(slotStatus)) {
+            throw new IllegalArgumentException("This time slot is already booked.");
+        }
         // Get user ID from email
-        Long userId = userDAO.findUserIdByEmail(appointmentReqDTO.getEmail());
+        Long userId = userDAO.findUserIdById(appointmentReqDTO.getUserId());
         if (userId == null) {
             throw new IllegalArgumentException("User must be registered to book an appointment.");
         }
-
         // Add appointment
-        appointmentDAO.addAppointment(userId, appointmentReqDTO.getSlotId());
+        appointmentDAO.addAppointment(userId, appointmentReqDTO.getSlotId(),
+                appointmentReqDTO.getBookingForName(), appointmentReqDTO.getBookingForEmail(), appointmentReqDTO.getBookingForContact());
 
         // Update time slot status
         appointmentDAO.updateTimeSlotStatus(appointmentReqDTO.getSlotId());
     }
-
 
 }

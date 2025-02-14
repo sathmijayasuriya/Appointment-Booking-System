@@ -13,9 +13,9 @@ public class SQLConstants {
 
 
     //add appointment
-    public static final String INSERT_APPOINTMENT = "INSERT INTO appointments (user_id, slot_id, status) VALUES (?, ?, 'BOOKED')";
+    public static final String INSERT_APPOINTMENT =  "INSERT INTO appointments (user_id, slot_id, booking_for_name, booking_for_email, booking_for_contact, status)VALUES (?, ?, ?, ?, ?, 'BOOKED')";
     public static final String UPDATE_TIME_SLOT_STATUS_BOOKED = "UPDATE time_slots SET status = 'BOOKED' WHERE slot_id = ?";
-    public static final String FIND_USER_BY_EMAIL = "SELECT user_id FROM users WHERE email = ?";
-
+    public static final String FIND_USER_BY_ID = "SELECT user_id FROM users WHERE user_id = ?";
+    public static final String CHECK_TIME_SLOT = "SELECT status FROM time_slots WHERE slot_id = ?";
 
 }

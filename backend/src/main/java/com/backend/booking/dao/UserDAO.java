@@ -13,9 +13,9 @@ public class UserDAO {
     private JdbcTemplate jdbcTemplate;
 
     // Find user ID by email
-    public Long findUserIdByEmail(String email) {
+    public Long findUserIdById(Long userId) {
         try {
-            return jdbcTemplate.queryForObject(SQLConstants.FIND_USER_BY_EMAIL, Long.class, email);
+            return jdbcTemplate.queryForObject(SQLConstants.FIND_USER_BY_ID, Long.class, userId);
         } catch (EmptyResultDataAccessException e) {
             return null; // User not found
         }

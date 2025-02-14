@@ -17,15 +17,22 @@ import java.util.List;
 public class AppointmentDAO {
     @Autowired
     private JdbcTemplate jdbcTemplate;
-    
+
     // Insert appointment
-    public void addAppointment(Long userId, Long slotId) {
-        jdbcTemplate.update(SQLConstants.INSERT_APPOINTMENT, userId, slotId);
+    public void addAppointment(Long userId, Long slotId, String bookingForName, String bookingForEmail, String bookingForContact) {
+        jdbcTemplate.update(SQLConstants.INSERT_APPOINTMENT, userId, slotId,bookingForName, bookingForEmail, bookingForContact);
     }
 
     // Update time slot status
     public void updateTimeSlotStatus(Long slotId) {
         jdbcTemplate.update(SQLConstants.UPDATE_TIME_SLOT_STATUS_BOOKED, slotId);
+    }
+    public String getTimeSlotStatus(Long slotId) {
+        try {
+            return jdbcTemplate.queryForObject(SQLConstants.CHECK_TIME_SLOT, String.class, slotId);
+        } catch (EmptyResultDataAccessException e) {
+            return null; // If slot does not exist
+        }
     }
 
 }

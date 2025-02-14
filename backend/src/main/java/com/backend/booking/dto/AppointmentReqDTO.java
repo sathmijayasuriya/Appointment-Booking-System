@@ -12,8 +12,8 @@ import lombok.Setter;
 public class AppointmentReqDTO {
     private Long userId;
     private Long slotId;
-    private String name;
-    private String email;
-    private String phone;
+    private String bookingForName;
+    private String bookingForEmail;
+    private String bookingForContact;
 
  }
