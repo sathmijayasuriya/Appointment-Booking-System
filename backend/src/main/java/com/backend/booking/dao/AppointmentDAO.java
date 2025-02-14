@@ -1,17 +1,14 @@
 package com.backend.booking.dao;
 
 import com.backend.booking.constants.SQLConstants;
-import com.backend.booking.dto.AppointmentDTO;
-import com.backend.booking.model.Appointment;
+import com.backend.booking.dto.AppointmentAdminResDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.List;
+
 
 @Repository
 public class AppointmentDAO {
@@ -33,6 +30,25 @@ public class AppointmentDAO {
         } catch (EmptyResultDataAccessException e) {
             return null; // If slot does not exist
         }
+    }
+    public List<AppointmentAdminResDTO> getAllAppointments() {
+        return jdbcTemplate.query(SQLConstants.FIND_ALL_APPOINTMENTS, (rs, rowNum) ->
+                new AppointmentAdminResDTO(
+                        rs.getLong("appointment_id"),
+                        rs.getLong("user_id"),
+                        rs.getString("user_name"),
+                        rs.getString("user_email"),
+                        rs.getLong("slot_id"),
+                        rs.getDate("date").toLocalDate(),
+                        rs.getTime("start_time").toLocalTime(),
+                        rs.getTime("end_time").toLocalTime(),
+                        rs.getString("booking_for_name"),
+                        rs.getString("booking_for_email"),
+                        rs.getString("booking_for_contact"),
+                        rs.getString("status"),
+                        rs.getTimestamp("created_at").toLocalDateTime()
+                )
+        );
     }
 
 }

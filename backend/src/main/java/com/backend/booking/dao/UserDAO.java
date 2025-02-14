@@ -20,5 +20,13 @@ public class UserDAO {
             return null; // User not found
         }
     }
+    public String findUserRoleByEmail(String email) {
+        try {
+            return jdbcTemplate.queryForObject(SQLConstants.FIND_BY_MAIL, String.class, email);
+        } catch (EmptyResultDataAccessException e) {
+            return null;
+        }
+    }
+
 
 }

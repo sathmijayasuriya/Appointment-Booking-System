@@ -1,18 +1,16 @@
 package com.backend.booking.service;
 
 import com.backend.booking.dao.AppointmentDAO;
-import com.backend.booking.dao.TimeSlotDAO;
 import com.backend.booking.dao.UserDAO;
-import com.backend.booking.dto.AppointmentDTO;
+import com.backend.booking.dto.AppointmentAdminResDTO;
 import com.backend.booking.dto.AppointmentReqDTO;
-import com.backend.booking.dto.AppointmentResDTO;
-import com.backend.booking.model.Appointment;
-import com.backend.booking.model.TimeSlot;
+
+import com.backend.booking.exceptions.UnauthorizedException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.stream.Collectors;
+
 
 @Service
 public class AppointmentService {
@@ -39,6 +37,16 @@ public class AppointmentService {
 
         // Update time slot status
         appointmentDAO.updateTimeSlotStatus(appointmentReqDTO.getSlotId());
+    }
+
+    public List<AppointmentAdminResDTO> getAllAppointments(String userEmail) {
+        // Check if the user is an admin
+        String role = userDAO.findUserRoleByEmail(userEmail);
+        if (!"ADMIN".equals(role)) {
+            throw new UnauthorizedException("Access denied. Only admins can view appointments.");
+        }
+
+        return appointmentDAO.getAllAppointments();
     }
 
 }
