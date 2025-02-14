@@ -37,4 +37,15 @@ public class SQLConstants {
                     "WHERE a.user_id = ?";
 
     public  static final String FIND_BY_MAIL_USER = "SELECT user_id FROM users WHERE email = ?";
+
+    //cancel their appointment
+    public static final String CANCEL_APPOINTMENT =
+            "UPDATE appointments SET status = 'CANCELLED' WHERE appointment_id = ? AND user_id = ?";
+
+    public static final String UPDATE_TIME_SLOT_STATUS_AVAILABLE =
+            "UPDATE time_slots SET status = 'AVAILABLE' WHERE slot_id = ?";
+
+    public static final String FIND_APPOINTMENT_SLOT_ID =
+            "SELECT slot_id FROM appointments WHERE appointment_id = ? AND user_id = ?";
+
 }

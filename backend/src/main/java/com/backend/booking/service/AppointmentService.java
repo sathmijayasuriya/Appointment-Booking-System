@@ -58,5 +58,18 @@ public class AppointmentService {
 
         return appointmentDAO.getAppointmentsByUserId(userId);
     }
+    public void cancelAppointment(String email, Long appointmentId) {
+        // Get user ID using email
+        Long userId = userDAO.findUserIdByEmail(email);
+        if (userId == null) {
+            throw new IllegalArgumentException("User not found.");
+        }
+
+        boolean success = appointmentDAO.cancelAppointment(userId, appointmentId);
+        if (!success) {
+            throw new IllegalArgumentException("Appointment not found or already cancelled.");
+        }
+    }
+
 
 }

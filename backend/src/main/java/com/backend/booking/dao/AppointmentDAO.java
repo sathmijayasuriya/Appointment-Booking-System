@@ -68,5 +68,32 @@ public class AppointmentDAO {
                 userId
         );
     }
+    //cancel the appointment
+    public boolean cancelAppointment(Long userId, Long appointmentId) {
+        // Get the slot_id of the appointment
+        Long slotId = getAppointmentSlotId(userId, appointmentId);
+        if (slotId == null) {
+            return false; // Appointment not found or not owned by user
+        }
+
+        // Cancel the appointment
+        int updatedRows = jdbcTemplate.update(SQLConstants.CANCEL_APPOINTMENT, appointmentId, userId);
+        if (updatedRows > 0) {
+            // Update the time slot to AVAILABLE
+            jdbcTemplate.update(SQLConstants.UPDATE_TIME_SLOT_STATUS_AVAILABLE, slotId);
+            return true;
+        }
+        return false;
+    }
+
+    // Get slot_id from appointment
+    public Long getAppointmentSlotId(Long userId, Long appointmentId) {
+        try {
+            return jdbcTemplate.queryForObject(SQLConstants.FIND_APPOINTMENT_SLOT_ID, Long.class, appointmentId, userId);
+        } catch (EmptyResultDataAccessException e) {
+            return null;
+        }
+    }
+
 
 }

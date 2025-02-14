@@ -42,7 +42,18 @@ public class AppointmentController {
     public ResponseEntity<?> getUserAppointments(@RequestParam String email) {
         try {
             List<AppointmentUserResDTO> appointments = appointmentService.getUserAppointments(email);
+            System.out.println("requested mail : "+email);
             return ResponseEntity.ok(appointments);
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+        }
+    }
+
+    @PutMapping("/cancel")
+    public ResponseEntity<String> cancelAppointment(@RequestParam String email, @RequestParam Long appointmentId) {
+        try {
+            appointmentService.cancelAppointment(email, appointmentId);
+            return ResponseEntity.ok("Appointment cancelled successfully.");
         } catch (IllegalArgumentException e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
         }
