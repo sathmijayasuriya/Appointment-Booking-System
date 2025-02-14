@@ -24,8 +24,7 @@ export default function HeroSection() {
             Appointment
           </Typography>
           <Typography variant="body1" color="textSecondary" sx={{ mt: 2 }}>
-            Lorem ipsum is a placeholder text commonly used in the design and
-            printing industry.
+          Just click the button below and start booking your appointment
           </Typography>
           <Button
             variant="contained"

@@ -43,18 +43,18 @@ export default function HeaderUser() {
               />
             </Box>
             <Box sx={{ display: "flex", gap: 3 }}>
-              <Button component={Link} to="/" sx={buttonStyle}>
-                Home
-              </Button>
-              <Button component={Link} to="/services" sx={buttonStyle}>
-                About Us
-              </Button>
-              <Button component={Link} to="/gallery" sx={buttonStyle}>
-                Contact Us
-              </Button>
-              <Button component={Link} to="/gallery" sx={loginButton}>
-               Log In
-              </Button>
+          <Button component={Link} to="/" sx={buttonStyle}>
+            Home
+          </Button>
+          <Button component={Link} to="/appointments" sx={buttonStyle}>
+            Appointments
+          </Button>
+          <Button component={Link} to="/#" sx={buttonStyle}>
+            About Us
+          </Button>
+          <Button component={Link} to="/#" sx={loginButton}>
+            Log In
+          </Button>
             </Box>
           </Toolbar>
         </AppBar>

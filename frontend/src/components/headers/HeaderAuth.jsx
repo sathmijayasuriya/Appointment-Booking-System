@@ -47,8 +47,8 @@ export default function HeaderAuth() {
           <Button component={Link} to="/" sx={buttonStyle}>
             Home
           </Button>
-          <Button component={Link} to="/#" sx={buttonStyle}>
-            Appointments
+          <Button component={Link} to="/appointments" sx={buttonStyle}>
+            Contact Us
           </Button>
           <Button component={Link} to="/#" sx={buttonStyle}>
             About Us
