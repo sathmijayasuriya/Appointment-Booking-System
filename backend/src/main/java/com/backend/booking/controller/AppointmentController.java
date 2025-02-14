@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@CrossOrigin
 @RestController
 @RequestMapping("/api")
 public class AppointmentController {
@@ -49,7 +50,7 @@ public class AppointmentController {
         }
     }
 
-    @PutMapping("/cancel")
+    @PutMapping("/cancelAppointment")
     public ResponseEntity<String> cancelAppointment(@RequestParam String email, @RequestParam Long appointmentId) {
         try {
             appointmentService.cancelAppointment(email, appointmentId);

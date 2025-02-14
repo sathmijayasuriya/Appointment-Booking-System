@@ -1,22 +1,22 @@
-package com.backend.MediEase.controller;
+package com.backend.booking.controller;
 
 
-import com.backend.MediEase.constants.RestURI;
-import com.backend.MediEase.dto.UserReqLoginDTO;
-import com.backend.MediEase.dto.UserReqRegisterDTO;
-import com.backend.MediEase.dto.UserResponseDTO;
-import com.backend.MediEase.service.AuthService;
+import com.backend.booking.dto.UserReqLoginDTO;
+import com.backend.booking.dto.UserRequestDTO;
+import com.backend.booking.dto.UserResLoginDTO;
+import com.backend.booking.dto.UserResponseDTO;
+import com.backend.booking.service.AuthService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Optional;
 
 @CrossOrigin
 @RestController
-@RequestMapping(RestURI.BASE_URL)
+@RequestMapping("/api")
 public class UserController {
 
     @Autowired
@@ -24,37 +24,25 @@ public class UserController {
     private static final Logger logger = LoggerFactory.getLogger(UserController.class);
 
     // Register User
-    @PostMapping(RestURI.USER_REGISTER)
-    public ResponseEntity<UserResponseDTO> registerUser(@RequestBody UserReqRegisterDTO dto) {
-        dto.setUserType("User");
-        System.out.println("request login "+dto.getName()+dto.getEmail());
-        Optional<UserResponseDTO> response = authService.registerUser(dto);
-        System.out.println("response : "+response);
-        return response.map(ResponseEntity::ok)
-                .orElse(ResponseEntity.status(400).body(null)); // 400 if registration fails
-    }
+    @PostMapping("/admin/register")
+    public ResponseEntity<UserResponseDTO> registerAdmin(@RequestBody UserRequestDTO userDTO,
+                                                         @RequestParam String adminEmail) {
+        // Ensure only an existing admin can register a new admin
+        UserResponseDTO adminUser = authService.getUserByEmail(adminEmail);
+        if (adminUser == null || !adminUser.getRole().equals("ADMIN")) {
+            return ResponseEntity.status(HttpStatus.FORBIDDEN)
+                    .body(null); // Unauthorized action
+        }
 
-    // Register Pharmacist
-    @PostMapping(RestURI.ADMIN_REGISTER)
-    public ResponseEntity<UserResponseDTO> registerPharmacy(@RequestBody UserReqRegisterDTO dto) {
-        dto.setUserType("Pharmacy");
-        Optional<UserResponseDTO> response = authService.registerUser(dto);
-        return response.map(ResponseEntity::ok)
-                .orElse(ResponseEntity.status(400).body(null)); // 400 if registration fails
+        // Set role as ADMIN explicitly
+        userDTO.setRole("ADMIN");
+        UserResponseDTO response = authService.registerUser(userDTO);
+        return ResponseEntity.ok(response);
     }
-    // Login User
-    @PostMapping(RestURI.USER_LOGIN)
-    public ResponseEntity<UserResponseDTO> loginUser(@RequestBody UserReqLoginDTO dto) {
-        Optional<UserResponseDTO> response = authService.loginUser(dto);
-        return response.map(ResponseEntity::ok)
-                .orElse(ResponseEntity.status(401).body(null));
-    }
-//     Login Pharmacist
-    @PostMapping(RestURI.ADMIN_LOGIN)
-    public ResponseEntity<UserResponseDTO> loginPharmacy(@RequestBody UserReqLoginDTO dto) {
-        Optional<UserResponseDTO> response = authService.loginUser(dto);
-        return response.map(ResponseEntity::ok)
-                .orElse(ResponseEntity.status(401).body(null));
+    @PostMapping("/login")
+    public ResponseEntity<UserResLoginDTO> login(@RequestBody UserReqLoginDTO loginDTO) {
+        UserResLoginDTO response = authService.login(loginDTO);
+        return ResponseEntity.ok(response);
     }
 
 }

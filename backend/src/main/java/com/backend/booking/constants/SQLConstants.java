@@ -48,4 +48,15 @@ public class SQLConstants {
     public static final String FIND_APPOINTMENT_SLOT_ID =
             "SELECT slot_id FROM appointments WHERE appointment_id = ? AND user_id = ?";
 
+    // user
+    public static final String INSERT_USER =
+            "INSERT INTO users (name, email, phone, password_hash, role, created_at) VALUES (?, ?, ?, ?, ?, NOW())";
+    public static final String FIND_USER_BY_EMAIL =
+            "SELECT * FROM users WHERE email = ?";
+
+    public static final String FIND_USER_BY_EMAIL_AND_PASSWORD =
+            "SELECT * FROM users WHERE email = ? AND password_hash = ?";
+    public static final String FIND_USER_BY_ID_ALL =
+            "SELECT * FROM users WHERE user_id = ?";
+
 }

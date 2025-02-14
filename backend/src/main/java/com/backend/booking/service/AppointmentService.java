@@ -9,11 +9,13 @@ import com.backend.booking.dto.AppointmentUserResDTO;
 import com.backend.booking.exceptions.UnauthorizedException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
 
 @Service
+@Transactional
 public class AppointmentService {
     @Autowired
     private AppointmentDAO appointmentDAO;

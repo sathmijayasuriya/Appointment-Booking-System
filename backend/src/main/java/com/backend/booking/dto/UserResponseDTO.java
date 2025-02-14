@@ -1,2 +1,22 @@
-package com.backend.booking.dto;public class UserResponseDTO {
+package com.backend.booking.dto;
+
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+import java.time.LocalDateTime;
+
+@Setter
+@Getter
+@AllArgsConstructor
+@NoArgsConstructor
+public class UserResponseDTO {
+    private Long userId;
+    private String name;
+    private String email;
+    private String phone;
+    private String role;
+    private LocalDateTime createdAt;
+
 }
