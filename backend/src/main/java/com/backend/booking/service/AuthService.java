@@ -27,6 +27,12 @@ public class AuthService {
         if (userDTO.getRole() == null || userDTO.getRole().isEmpty()) {
             userDTO.setRole("USER");
         }
+        // Check if the email already exists in the system
+        String existingEmail = userDAO.findUserPasswordByEmail(userDTO.getEmail());
+        if (existingEmail != null) {
+            throw new IllegalArgumentException("Email already registered.");
+        }
+
         String hashedPassword = passwordEncoder.encode(userDTO.getPassword());
         userDAO.registerUser(userDTO, hashedPassword);        // Store user details in DB
         return userDAO.findUserByEmail(userDTO.getEmail());   // Retrieve and return the stored user details
