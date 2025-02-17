@@ -1,6 +1,7 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { Box ,Typography,Button} from '@mui/material'
 import { display } from '@mui/system'
+import axios from "axios";
 
 const buttonStyle = {
     border: "2px solid #14AE5C",
@@ -9,6 +10,20 @@ const buttonStyle = {
     borderRadius: "10px",
   };
 export default function ViewBooking() {
+    const [appointments,setAppointments] = useState(null);
+    const fetchAppointments = async () => {
+        try{
+            const response = await axios.get(`http://localhost:8080/api/user/allAppointments`)
+            setAppointments(response.data);
+        }catch(error){
+            console.error("Error fetching appointments", error);
+        }
+    }
+
+    useEffect(() => {
+        fetchAppointments();
+      }, []);
+      
   return (
     <>
     <Box sx={{ mt: 18, px: 5, maxWidth: "1400px", mx: "auto",height:"100%" }}>
