@@ -7,7 +7,7 @@ import { reset } from "../Redux/features/auth/authSlice";
 import { Landing } from "../views/Auth/Landing";
 import AuthLayout from "../layouts/AuthLayout";
 import Appointments from "../views/user/Appointments";
-
+import ViewBooking from "../views/user/ViewBooking";
 export const authRouter = createBrowserRouter([ 
   {
     path: "/",
@@ -25,6 +25,10 @@ export const authRouter = createBrowserRouter([
         path: "/appointments",
         element: <Appointments />,
       },
+      {
+        path: "/view-booking/:id",
+        element: <ViewBooking />,
+      }
     ],
   },
 ]);

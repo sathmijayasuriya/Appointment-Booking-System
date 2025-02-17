@@ -2,15 +2,17 @@ import React from "react";
 import { AppBar, Toolbar, Button, Box } from "@mui/material";
 import { Link } from "react-router-dom";
 import logo from "../../assets/BOOKAPP.png";
+import { borderRadius } from "@mui/system";
 
 const buttonStyle = {
   color: "black",
+  borderRadius:"none",
   textTransform: "none",
   fontWeight: "400 !important", // Forces override
   "&:hover": {
-    backgroundColor: "transparent",
-    color: "#14AE5C",
-  },
+      backgroundColor: "transparent",
+      color: "#14AE5C",
+      },
 };
 const loginButton = {
   border: "2px solid #14AE5C",
@@ -50,7 +52,7 @@ export default function HeaderAuth() {
           <Button component={Link} to="/appointments" sx={buttonStyle}>
             Contact Us
           </Button>
-          <Button component={Link} to="/#" sx={buttonStyle}>
+          <Button component={Link} to="/view-booking/:id" sx={buttonStyle}>
             About Us
           </Button>
           <Button component={Link} to="/#" sx={loginButton}>

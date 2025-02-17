@@ -1,5 +1,5 @@
 import React from "react";
-import { Box, Button, Grid, Typography } from "@mui/material";
+import { Box, Button, Grid, Typography,Grid2 } from "@mui/material";
 import Hero from "../../assets/hero.png";
 
 export default function HeroSection() {
