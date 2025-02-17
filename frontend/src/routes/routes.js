@@ -3,11 +3,12 @@ import { useSelector, useDispatch } from "react-redux";
 import { RouterProvider, createBrowserRouter ,Navigate} from "react-router-dom";
 import { toast } from "react-toastify";
 import { reset } from "../Redux/features/auth/authSlice";
-
 import { Landing } from "../views/Auth/Landing";
 import AuthLayout from "../layouts/AuthLayout";
 import Appointments from "../views/user/Appointments";
 import ViewBooking from "../views/user/ViewBooking";
+import Login from "../views/Auth/Login";
+import Register from "../views/Auth/Register";
 export const authRouter = createBrowserRouter([ 
   {
     path: "/",
@@ -28,7 +29,15 @@ export const authRouter = createBrowserRouter([
       {
         path: "/view-booking/:id",
         element: <ViewBooking />,
-      }
+      },
+      {
+        path: "/auth/sign-in",
+        element: <Login />,
+      },
+            {
+        path: "/auth/register",
+        element: <Register />,
+      },
     ],
   },
 ]);
