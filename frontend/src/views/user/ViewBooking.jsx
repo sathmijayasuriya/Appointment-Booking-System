@@ -1,7 +1,9 @@
-import React, { useEffect, useState } from 'react'
-import { Box ,Typography,Button} from '@mui/material'
+import React, { useEffect, useState, } from 'react'
+import { Box ,Typography,Button,Container,Grid2,TextField,Card,CardMedia,IconButton,Table,TableBody,TableCell,TableContainer,TableHead,TableRow,Paper, Chip,} from '@mui/material'
 import { display } from '@mui/system'
 import axios from "axios";
+import { useSelector } from "react-redux";
+
 
 const buttonStyle = {
     border: "2px solid #14AE5C",
@@ -11,6 +13,8 @@ const buttonStyle = {
   };
 export default function ViewBooking() {
     const [appointments,setAppointments] = useState(null);
+    const { user } = useSelector((state) => state.auth);
+
     const fetchAppointments = async () => {
         try{
             const response = await axios.get(`http://localhost:8080/api/user/allAppointments`)
@@ -19,11 +23,10 @@ export default function ViewBooking() {
             console.error("Error fetching appointments", error);
         }
     }
-
     useEffect(() => {
         fetchAppointments();
       }, []);
-      
+
   return (
     <>
     <Box sx={{ mt: 18, px: 5, maxWidth: "1400px", mx: "auto",height:"100%" }}>
