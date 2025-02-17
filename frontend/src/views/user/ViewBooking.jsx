@@ -17,7 +17,7 @@ export default function ViewBooking() {
 
     const fetchAppointments = async () => {
         try{
-            const response = await axios.get(`http://localhost:8080/api/user/allAppointments`)
+            const response = await axios.get(`http://localhost:8080/api/user/allAppointments/${user.email}`)
             setAppointments(response.data);
         }catch(error){
             console.error("Error fetching appointments", error);
@@ -39,6 +39,52 @@ export default function ViewBooking() {
                   marginTop:"20px"}}>
             <Typography variant='h5'>Bookings</Typography>
             <Button sx={buttonStyle}>+ Create</Button>
+        </Box>
+        <Box sx={{marginTop:"20px"}}>
+        <TableContainer component={Paper}>
+        <Table>
+          <TableHead>
+            <TableRow>
+              <TableCell>Date</TableCell>
+              <TableCell>Booked For</TableCell>
+              <TableCell>Contact</TableCell>
+              <TableCell>Status</TableCell>
+              <TableCell>Status</TableCell>
+              <TableCell>Created At</TableCell>
+            </TableRow>
+          </TableHead>
+          {/* <TableBody>
+            {appointments.map((appointment) => (
+              <TableRow key={appointment.prescriptionId}>
+                <TableCell>{appointment.prescriptionId}</TableCell>
+                <TableCell>{appointment.date}</TableCell>
+                <TableCell>{appointment.note}</TableCell>
+                <TableCell>{appointment.deliveryAddress}</TableCell>
+                <TableCell>
+                  <Chip
+                    label={appointment.status}
+                    color={
+                        appointment.status === "Pending" ? "warning" : "success"
+                    }
+                  />
+                </TableCell>
+                {/* <TableCell>
+                  <IconButton
+                    color="primary"
+                    onClick={() => handleView(prescription)}
+                  >
+                    <VisibilityIcon />
+                  </IconButton>
+                  <IconButton color="error">
+                    <DeleteIcon />
+                  </IconButton>
+                </TableCell> */}
+              {/* </TableRow>
+            ))}
+          </TableBody>
+           */} 
+        </Table>
+      </TableContainer>
         </Box>
     </Box>
     </>
