@@ -1,206 +1,186 @@
 import React, { useState } from "react";
-import {
-  TextField,
-  Button,
-  RadioGroup,
-  FormControlLabel,
-  Radio,
-  Grid,
-  Card,
-  Typography,
-  Box,
-  IconButton,
-} from "@mui/material";
-import { LocalizationProvider, DateCalendar } from "@mui/x-date-pickers";
+import { TextField, Button, Grid, Card, Typography, Box } from "@mui/material";
+import { LocalizationProvider, StaticDatePicker } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import dayjs from "dayjs";
-import { ChevronLeft, ChevronRight } from "@mui/icons-material";
 
 export default function Appointments() {
   const [selectedDate, setSelectedDate] = useState(dayjs());
-  const [selectedTime, setSelectedTime] = useState("10:00 - 10:30");
+  const [selectedTime, setSelectedTime] = useState("10.00am");
   const [formData, setFormData] = useState({
     name: "Sathmi Jayasuriya",
     email: "sathmijayasuriya@gmail.com",
     phone: "0705290345",
   });
-  const [currentMonth, setCurrentMonth] = useState(dayjs("2025-01-01"));
 
   const handleChange = (event) => {
     setFormData({ ...formData, [event.target.name]: event.target.value });
   };
 
-  const handleMonthChange = (newMonth) => {
-    setCurrentMonth(newMonth);
-  };
+  const shouldDisableDate = (date) => date.isBefore(dayjs(), "day");
 
-  const shouldDisableDate = (date) => {
-    return date.isBefore(dayjs(), "day") && date.year() === dayjs().year();
-  };
-
-  const generateTimeSlots = () => {
-    const slots = [];
-    for (let hour = 9; hour < 18; hour++) {
-      slots.push(`${hour}:00 - ${hour}:30`);
-      slots.push(`${hour}:30 - ${hour + 1}:00`);
-    }
-    return slots;
-  };
-
-  const timeSlots = generateTimeSlots();
-
-  const handleBooking = () => {
-    if (!formData.name || !formData.email || !formData.phone) {
-      alert("Please fill in all fields.");
-      return;
-    }
-    if (!/^\d{10}$/.test(formData.phone)) {
-      alert("Please enter a valid 10-digit phone number.");
-      return;
-    }
-    if (!/\S+@\S+\.\S+/.test(formData.email)) {
-      alert("Please enter a valid email address.");
-      return;
-    }
-    console.log("Booking confirmed:", { selectedDate, selectedTime, formData });
-  };
+  const timeSlots = [
+    "9:00 - 9:30",
+    "9:30 - 10:00",
+    "10:30 - 11:00",
+    "12:00 - 12:30",
+    "2:00 - 2:30",
+    "3:00 - 3:30",
+    "4:00 - 4:30",
+  ];
 
   return (
-    <Box sx={{ my: 10 }}>
-      <Grid container spacing={2} justifyContent="center">
-        {/* Left Side: Calendar */}
-        <Grid item xs={12} md={5}>
+    <Box sx={{ mt: 13, px: 5, maxWidth: "1400px", mx: "auto" }}>
+      <Grid container spacing={10} sx={{ alignItems: "", height: "100%" }}>
+        <Grid item xs={12} md={4} 
+              // sx={{ backgroundColor: "red" }}
+              >
           <Box
             sx={{
-              width: 500,
-              height: 600,
-              p: 2,
+              p: 3,
               borderRadius: 2,
-              boxShadow: 2,
+              boxShadow: 3,
               bgcolor: "white",
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
             }}
           >
-            <Typography sx={{ fontWeight: "bold", mb: 1, textAlign: "center" }}>
+            <Typography
+              variant="h6"
+              sx={{ fontWeight: "bold", mb: 2, textAlign: "center" }}
+            >
               Select Date
             </Typography>
-
-            {/* Month Selector */}
-            <Box
-              display="flex"
-              alignItems="center"
-              justifyContent="space-between"
-              sx={{ mb: 2 }}
-            >
-              <IconButton
-                onClick={() => handleMonthChange(currentMonth.subtract(1, "month"))}
-              >
-                <ChevronLeft />
-              </IconButton>
-
-              <Typography
-                sx={{ flexGrow: 1, textAlign: "center", fontWeight: "bold" }}
-              >
-                {currentMonth.format("MMMM YYYY")}
-              </Typography>
-
-              <IconButton
-                onClick={() => handleMonthChange(currentMonth.add(1, "month"))}
-              >
-                <ChevronRight />
-              </IconButton>
-            </Box>
-
             <LocalizationProvider dateAdapter={AdapterDayjs}>
-              <DateCalendar
+              <StaticDatePicker
                 value={selectedDate}
                 onChange={(newValue) => setSelectedDate(newValue)}
-                disableHighlightToday
-                shouldDisableDate={shouldDisableDate}
-                views={["day"]}
+                disablePast
+                views={["year", "month", "day"]}
                 sx={{
                   width: "100%",
-                  height: "900",
-                  overflow: "hidden",
-                  "& .MuiPickersCalendarHeader-root": { fontSize: "1.2rem" },
-                  "& .MuiPickersDay-root": { fontSize: "1.2rem", width: 48, height: 48 },
-                  "& .MuiDayCalendar-root": { height: "100%", minHeight: 350 },
-                  "& .MuiDayCalendar-weekDayLabel": { fontSize: "1.1rem" },
-                  "& .Mui-selected": {
-                    border: "2px solid #0d47a1",
-                    backgroundColor: "transparent",
-                    color: "#0d47a1",
+                  "& .MuiPickersYear-yearButton": {
+                    // backgroundColor: "#e3f2fd", // Light blue background
+                    // color: "#0d47a1", // Dark blue text
+                    borderRadius: "8px",
+                    "&:hover": {
+                      backgroundColor: "#e3f2fd", 
+                    },
+                    "&.Mui-selected": {
+                      backgroundColor: "#1565c0", 
+                      color: "white", 
+                    },
                   },
-                  "& .MuiPickersDay-root.Mui-disabled": { opacity: 0.5, overflow: "hidden" },
+                  "& .MuiPickersMonth-monthButton": {
+                    // backgroundColor: "#f3e5f5", // Light purple background
+                    // color: "#6a1b9a", // Dark purple text
+                    borderRadius: "8px",
+                    "&:hover": {
+                      backgroundColor: "#e3f2fd", 
+                      border : "1px solid #e3f2fd"
+                    },
+                    "&.Mui-selected": {
+                      backgroundColor: "#1565c0", 
+                      color: "white", 
+                    },
+                  },
+                  "& .MuiPickersDay-root": {
+                    width: 41,
+                    height: 36,
+                    fontSize: "1rem",
+                    borderRadius: "8px",
+                  },
+                  "& .MuiDayCalendar-weekContainer": {
+                    gap: "5px", 
+                  },
+                  "& .MuiPickersCalendarHeader-root": { 
+                    mb: 1 ,
+                    // marginX:3,
+            
+                  },
+                  "& .MuiPickersCalendarHeader-switchViewButton": {
+                    marginLeft: "auto", 
+                  },
+            
+                  "& .MuiDayCalendar-weekDayLabel": { fontSize: "1rem", fontWeight: "bold", marginX: "5px", } // Change font size here
                 }}
               />
             </LocalizationProvider>
           </Box>
         </Grid>
 
-        {/* Right Side: Time Slot Selection and Form */}
-        <Grid item xs={12} md={5}>
-          <Grid container direction="column" spacing={2}>
-            {/* Time Slot Selection */}
-            <Grid item>
-              <Card sx={{ padding: 2 }}>
-                <Typography variant="h6">Select Time Slot</Typography>
-                <RadioGroup
-                  row
-                  value={selectedTime}
-                  onChange={(e) => setSelectedTime(e.target.value)}
-                >
-                  {timeSlots.map((slot) => (
-                    <FormControlLabel
-                      key={slot}
-                      value={slot}
-                      control={<Radio color="primary" />}
-                      label={slot}
-                    />
-                  ))}
-                </RadioGroup>
-              </Card>
+        <Grid item xs={12} md={8} 
+              // sx={{ backgroundColor: "red" }}
+              >
+          <Card sx={{ padding: 3, borderRadius: 2, boxShadow: 3 }}>
+            <Typography variant="h6" sx={{ mb: 2, fontWeight: "bold" }}>
+              Select Time Slot
+            </Typography>
+            <Grid container spacing={2} style={{marginBottom:"40px"}}>
+              {timeSlots.map((slot) => (
+                <Grid item xs={3} key={slot}>
+                  <Button
+                    variant={selectedTime === slot ? "contained" : "outlined"}
+                    fullWidth
+                    onClick={() => setSelectedTime(slot)}
+                    sx={{
+                      borderRadius: "8px",
+                      padding: "10px 0",
+                      fontWeight: "bold",
+                      "&:hover": {
+                        bgcolor: selectedTime === slot ? "#0d47a1" : "#e3f2fd",
+                      },
+                      bgcolor: selectedTime === slot ? "#0d47a1" : "white",
+                      color: selectedTime === slot ? "white" : "#0d47a1",
+                    }}
+                  >
+                    {slot}
+                  </Button>
+                </Grid>
+              ))}
             </Grid>
+          {/* </Card>
 
-            {/* Booking Details Form */}
-            <Grid item>
-              <Card sx={{ padding: 2 }}>
-                <Typography variant="h6">Booking Details</Typography>
-                <TextField
-                  fullWidth
-                  label="Enter Your Name"
-                  name="name"
-                  value={formData.name}
-                  onChange={handleChange}
-                  margin="normal"
-                />
-                <TextField
-                  fullWidth
-                  label="Email Address"
-                  name="email"
-                  value={formData.email}
-                  onChange={handleChange}
-                  margin="normal"
-                />
-                <TextField
-                  fullWidth
-                  label="Contact Number"
-                  name="phone"
-                  value={formData.phone}
-                  onChange={handleChange}
-                  margin="normal"
-                />
-                <Button
-                  variant="contained"
-                  color="primary"
-                  sx={{ marginTop: 2 }}
-                  fullWidth
-                  onClick={handleBooking}
-                >
-                  Book Now
-                </Button>
-              </Card>
-            </Grid>
-          </Grid>
+          <Card sx={{ padding: 3, mt: 3, borderRadius: 2, boxShadow: 3 }}> */}
+            <Typography variant="h6" sx={{ my: 2, fontWeight: "bold" }}>
+              Booking Details
+            </Typography>
+            {Object.keys(formData).map((field) => (
+              <TextField
+                key={field}
+                fullWidth
+                label={field.replace(/\b\w/g, (l) => l.toUpperCase())}
+                name={field}
+                value={formData[field]}
+                onChange={handleChange}
+                margin="normal"
+                sx={{
+                  bgcolor: "#f5f5f5",
+                  borderRadius: 1,
+                  "&:hover": { bgcolor: "#e0e0e0" },
+                }}
+              />
+            ))}
+            <Box sx={{ display: "flex", justifyContent: "right" }}>
+              <Button
+                variant="contained"
+                sx={{
+                  width: "15%",
+                  mt: 2,
+                  bgcolor: "white",
+                  border: "2px solid #1565c0",
+                  color: "#1565c0",
+                  borderRadius: "8px",
+                  // fontWeight: "bold",
+                  "&:hover": { bgcolor: "#1565c0", color: "white" },
+                }}
+                fullWidth
+              >
+                Book Now
+              </Button>
+            </Box>
+          </Card>
         </Grid>
       </Grid>
     </Box>
