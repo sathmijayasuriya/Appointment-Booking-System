@@ -77,17 +77,22 @@ const Theme = createTheme({
         },
       },
     },
-     MuiOutlinedInput: {
+    MuiOutlinedInput: {
       styleOverrides: {
         root: {
-          '&.Mui-focused': {
-            '& fieldset': {
-              borderColor: 'red', 
-            },
+          '& fieldset': {
+            borderColor: 'gray', // Default border color
+          },
+          '&:hover fieldset': {
+            borderColor: 'gray', // Border color on hover
+          },
+          '&.Mui-focused fieldset': {
+            borderColor: 'gray', // Border color when focused
+            borderWidth: '1px', // Border width on focus
           },
         },
       },
-    },
+    }
 
   },
 });

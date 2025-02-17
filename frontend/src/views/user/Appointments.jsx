@@ -30,7 +30,7 @@ export default function Appointments() {
   ];
 
   return (
-    <Box sx={{ mt: 13, px: 5, maxWidth: "1400px", mx: "auto" }}>
+    <Box sx={{ mt: 18, px: 5, maxWidth: "1400px", mx: "auto",height:"100%" }}>
       <Grid container spacing={10} sx={{ alignItems: "", height: "100%" }}>
         <Grid item xs={12} md={4} 
               // sx={{ backgroundColor: "red" }}
@@ -39,7 +39,7 @@ export default function Appointments() {
             sx={{
               p: 3,
               borderRadius: 2,
-              boxShadow: 3,
+              boxShadow: "none",
               bgcolor: "white",
               display: "flex",
               flexDirection: "column",
@@ -48,7 +48,7 @@ export default function Appointments() {
           >
             <Typography
               variant="h6"
-              sx={{ fontWeight: "bold", mb: 2, textAlign: "center" }}
+              sx={{  mb: 2, textAlign: "center" }}
             >
               Select Date
             </Typography>
@@ -113,8 +113,8 @@ export default function Appointments() {
         <Grid item xs={12} md={8} 
               // sx={{ backgroundColor: "red" }}
               >
-          <Card sx={{ padding: 3, borderRadius: 2, boxShadow: 3 }}>
-            <Typography variant="h6" sx={{ mb: 2, fontWeight: "bold" }}>
+          <Card sx={{ padding: 3, borderRadius: 2, boxShadow: "none" }}>
+            <Typography variant="h6" sx={{ mb: 2, }}>
               Select Time Slot
             </Typography>
             <Grid container spacing={2} style={{marginBottom:"40px"}}>
@@ -127,11 +127,12 @@ export default function Appointments() {
                     sx={{
                       borderRadius: "8px",
                       padding: "10px 0",
-                      fontWeight: "bold",
+                      // fontWeight: "bold",
+                      border: selectedTime === slot ?"0px" :"1px solid rgb(180, 200, 230)",
                       "&:hover": {
                         bgcolor: selectedTime === slot ? "#0d47a1" : "#e3f2fd",
                       },
-                      bgcolor: selectedTime === slot ? "#0d47a1" : "white",
+                      bgcolor: selectedTime === slot ? "#0F4C81" : "white",
                       color: selectedTime === slot ? "white" : "#0d47a1",
                     }}
                   >
@@ -140,10 +141,7 @@ export default function Appointments() {
                 </Grid>
               ))}
             </Grid>
-          {/* </Card>
-
-          <Card sx={{ padding: 3, mt: 3, borderRadius: 2, boxShadow: 3 }}> */}
-            <Typography variant="h6" sx={{ my: 2, fontWeight: "bold" }}>
+            <Typography variant="h6" sx={{ my: 2,  }}>
               Booking Details
             </Typography>
             {Object.keys(formData).map((field) => (
@@ -157,24 +155,22 @@ export default function Appointments() {
                 margin="normal"
                 required
                 sx={{
-                  // bgcolor: "#f5f5f5",
                   borderRadius: 3,
-                  // "&:hover": { bgcolor: "#e0e0e0" },
                 }}
               />
             ))}
             <Box sx={{ display: "flex", justifyContent: "right" }}>
               <Button
-                variant="contained"
+                variant="outlined"
                 sx={{
                   width: "15%",
                   mt: 2,
-                  bgcolor: "white",
-                  border: "2px solid #1565c0",
-                  color: "#1565c0",
+                  // bgcolor: "white",
+                  border: "2px solid #14AE5C",
+                  color: "#14AE5C",
                   borderRadius: "8px",
-                  // fontWeight: "bold",
-                  "&:hover": { bgcolor: "#1565c0", color: "white" },
+                  "&:hover": { bgcolor: "#14AE5C", 
+                              color: "white" },
                 }}
                 fullWidth
               >
