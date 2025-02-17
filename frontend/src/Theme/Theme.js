@@ -31,29 +31,16 @@ const Theme = createTheme({
       secondary: '#757575', // Secondary text color
     },
   },
-  // typography: {
-  //   fontFamily: "'Helvetica Neue', sans-serif", // Global font family
-  //   button: {
-  //     fontFamily: "'Google Sans', 'Roboto', 'Arial', sans-serif",
-  //     textTransform: "none", 
-  //   },
-  //   h6: {
-  //     fontFamily: "'Google Sans', 'Roboto', 'Arial', sans-serif", 
-  //     fontWeight:"lighter"
-  //   },
-  //   h5: {
-  //       fontFamily: "'Google Sans', 'Roboto', 'Arial', sans-serif",
-  //       fontWeight:"100"
-  //     },
-  //     h4: {
-  //       fontFamily: "'Google Sans', 'Roboto', 'Arial', sans-serif", 
-  //       fontWeight:"500"
-  //     },
-  //     h2: {
-  //       fontWeight:"500"
-  //     },
-      
-  // },
+  typography: {
+    fontFamily: '"Poppins", "Roboto", "Helvetica", "Arial", sans-serif', // Set Poppins as default font
+    h1: {
+      fontFamily: '"Poppins", "Roboto", "Helvetica", "Arial", sans-serif', // Customize specific headers if needed
+    },
+    h2: {
+      fontFamily: '"Poppins", "Roboto", "Helvetica", "Arial", sans-serif',
+    },
+  },
+
   components: {
     MuiButton: {
       styleOverrides: {
@@ -90,6 +77,18 @@ const Theme = createTheme({
         },
       },
     },
+     MuiOutlinedInput: {
+      styleOverrides: {
+        root: {
+          '&.Mui-focused': {
+            '& fieldset': {
+              borderColor: 'red', 
+            },
+          },
+        },
+      },
+    },
+
   },
 });
 

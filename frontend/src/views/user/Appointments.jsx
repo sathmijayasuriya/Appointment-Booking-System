@@ -155,10 +155,11 @@ export default function Appointments() {
                 value={formData[field]}
                 onChange={handleChange}
                 margin="normal"
+                required
                 sx={{
-                  bgcolor: "#f5f5f5",
-                  borderRadius: 1,
-                  "&:hover": { bgcolor: "#e0e0e0" },
+                  // bgcolor: "#f5f5f5",
+                  borderRadius: 3,
+                  // "&:hover": { bgcolor: "#e0e0e0" },
                 }}
               />
             ))}
