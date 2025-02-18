@@ -47,7 +47,7 @@ const Login = () => {
 
 //         // Redirect based on userType
 //         if (userType === "Admin") {
-//           navigate("/admin");  // Redirect to Pharmacy Dashboard
+//           navigate("/admin");  // Redirect to admin Dashboard
 //         } else {
 //           navigate("/user");  // Redirect to User Dashboard
 //         }

@@ -1,6 +1,6 @@
 import { signIn, signUpUser, signUpAdmin } from "../../../services/AuthService";
 
-// Login User or Pharmacist
+// Login User or Admin
 const login = async (payload) => {
   try{
   const user = await signIn(payload);
@@ -26,7 +26,7 @@ const registerUser = async (payload) => {
 const registerAdmin = async (payload) => {
   const admin = await signUpAdmin(payload);
 
-  // Optionally store pharmacist data locally if needed
+  // Optionally store Admin data locally if needed
   return admin;
 };
 

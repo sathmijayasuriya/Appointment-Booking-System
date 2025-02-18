@@ -69,15 +69,6 @@ export default function AdminReg() {
     if (!data.phoneNumber.trim()) {
       errors.phoneNumber = "Phone Number is required";
     }
-    if (!data.dob.trim()) {
-      errors.dob = "Date of Birth is required";
-    }
-    if (!data.address.trim()) {
-      errors.address = "Address is required";
-    }
-    if (!data.pharmacyName.trim()) {
-      errors.pharmacyName = "Pharmacy Name is required";
-    }
     if (!data.password.trim()) {
       errors.password = "Password is required";
     }

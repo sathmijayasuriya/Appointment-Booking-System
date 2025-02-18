@@ -1,14 +1,12 @@
 import React from "react";
 import { Box, CssBaseline, Grid2 } from "@mui/material";
 import { Outlet } from "react-router-dom";
-import HeaderPharmacist from "../components/Headers/HeaderPharmacist";
 import Footer from "../components/Footers/Footer";
 
 export default function AdminLayout() {
   return (
     <>
       <CssBaseline />
-      {/* <HeaderPharmacist /> */}
       <Grid2
         container
         direction="row"

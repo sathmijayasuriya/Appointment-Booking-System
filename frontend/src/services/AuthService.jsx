@@ -45,7 +45,7 @@ export const signUpAdmin = async (payload) => {
     );
     return response.data; // Admin registration response
   } catch (error) {
-    console.error("Error during pharmacist sign-up:", error.message);
+    console.error("Error during admin sign-up:", error.message);
     throw error;
   }
 };
