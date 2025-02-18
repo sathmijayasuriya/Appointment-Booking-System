@@ -46,8 +46,8 @@ const Register = () => {
         name: formData.fullName,
         email: formData.email,
         password: formData.password,
-        contactNo: formData.phoneNumber,
-        userType: "User",   
+        phone: formData.phoneNumber,
+        role: "User",   
     }
       dispatch(registerUser(payload));
       console.log("Form submitted successfully!");

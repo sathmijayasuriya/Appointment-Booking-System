@@ -9,6 +9,7 @@ import Appointments from "../views/user/Appointments";
 import ViewBooking from "../views/user/ViewBooking";
 import Login from "../views/Auth/Login";
 import Register from "../views/Auth/Register";
+import AdminReg from "../views/Auth/AdminReg";
 export const authRouter = createBrowserRouter([ 
   {
     path: "/",
@@ -34,10 +35,14 @@ export const authRouter = createBrowserRouter([
         path: "/auth/sign-in",
         element: <Login />,
       },
-            {
+      {
         path: "/auth/register",
         element: <Register />,
       },
+      {
+        path:"/admin/register",
+        element: <AdminReg/>,
+      }
     ],
   },
 ]);
