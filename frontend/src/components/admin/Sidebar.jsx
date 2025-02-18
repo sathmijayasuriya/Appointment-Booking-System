@@ -20,8 +20,11 @@ import {
   AdminPanelSettings,
   PersonAdd,
 } from "@mui/icons-material";
-import SettingsIcon from '@mui/icons-material/Settings';
-
+import SettingsIcon from "@mui/icons-material/Settings";
+import ScheduleIcon from "@mui/icons-material/Schedule";
+import ManageSearchIcon from "@mui/icons-material/ManageSearch";
+import EditCalendarIcon from "@mui/icons-material/EditCalendar";
+import { fontWeight } from "@mui/system";
 export const Sidebar = () => {
   const [open, setOpen] = useState(true);
   const [authOpen, setAuthOpen] = useState(false);
@@ -36,48 +39,64 @@ export const Sidebar = () => {
   };
   const listItemStyle = {
     my: 1, // Vertical margin for spacing
+    ml: 3,
+    color: "#344054",
+    "&:hover": {
+      backgroundColor: "#e3f2fd",
+    },
   };
-  
+
   const nestedListItemStyle = {
     pl: 4, // Left padding for sub-items
-    my: 0.5, // Smaller vertical margin for sub-items
+    my: 0.5,
+    ml: 3,
+    color: "#344054",
+    "&:hover": {
+      backgroundColor: "#e3f2fd",
+    },
   };
-  
+  const listIconStyle = {
+    fontSize: 17,
+    color: "#344054",
+    ml: 2,
+  };
+  const listTextStyle = {
+    fontSize: "15px !important",
+    fontWeight: 400,
+  };
 
   return (
     <>
       <Drawer
         variant="permanent"
         sx={{
-          width: open ? 240 : 60,
+          width: open ? 300 : 100,
           flexShrink: 0,
           "& .MuiDrawer-paper": {
-            width: open ? 240 : 60,
+            width: open ? 300 : 100,
             transition: "width 0.3s ease",
             overflowX: "hidden",
+            pt: 3,
           },
         }}
       >
         <List>
           <ListItem disablePadding>
-            <ListItemButton onClick={toggleDrawer}>
+            <ListItemButton sx={listItemStyle} onClick={toggleDrawer}>
               <ListItemIcon>
-                <Menu />
+                <Menu sx={listIconStyle} />
               </ListItemIcon>
-              {open && <ListItemText primary="TailAdmin" />}
+              {open && <ListItemText primary="BookAPP" />}
             </ListItemButton>
           </ListItem>
         </List>
         <Divider />
         <List>
+          {/* <List>
           {[
-            { text: "Dashboard", icon: <Dashboard /> },
-            { text: "Calendar", icon: <CalendarToday /> },
-            { text: "All users", icon: <Person /> },
-            // { text: "All users", icon: <Person /> },
-
-            //   { text: "Forms", icon: <InsertDriveFile /> },
-            //   { text: "Tables", icon: <TableChart /> },
+            { text: "Dashboard", icon: <Dashboard sx={listIconStyle}  /> },
+            { text: "Calendar", icon: <CalendarToday sx={listIconStyle}  /> },
+            { text: "All users", icon: <Person sx={listIconStyle}  /> },
           ].map((item, index) => (
             <ListItem key={index} disablePadding>
               <ListItemButton sx={listItemStyle}>
@@ -86,42 +105,172 @@ export const Sidebar = () => {
               </ListItemButton>
             </ListItem>
           ))}
+        </List> */}
+
+          <ListItem disablePadding>
+            <ListItemButton sx={listItemStyle}>
+              <ListItemIcon>
+                <Dashboard sx={listIconStyle} />
+              </ListItemIcon>
+              {open && (
+                <ListItemText
+                  slotProps={{
+                    primary: {
+                      sx: listTextStyle,
+                    },
+                  }}
+                  primary="Dashboard"
+                />
+              )}
+            </ListItemButton>
+          </ListItem>
+          <ListItem disablePadding>
+            <ListItemButton sx={listItemStyle}>
+              <ListItemIcon>
+                <CalendarToday sx={listIconStyle} />
+              </ListItemIcon>
+              {open && (
+                <ListItemText
+                  slotProps={{
+                    primary: {
+                      sx: listTextStyle,
+                    },
+                  }}
+                  primary="Calendar"
+                />
+              )}
+            </ListItemButton>
+          </ListItem>
+
+          <ListItem disablePadding>
+            <ListItemButton sx={listItemStyle} onClick={toggleAuthDropdown}>
+              <ListItemIcon>
+                <EditCalendarIcon sx={listIconStyle} />
+              </ListItemIcon>
+              {open && (
+                <ListItemText
+                  slotProps={{
+                    primary: {
+                      sx: listTextStyle,
+                    },
+                  }}
+                  primary="Appointments"
+                />
+              )}
+              {open && (authOpen ? <ExpandLess /> : <ExpandMore />)}
+            </ListItemButton>
+          </ListItem>
+          <Collapse in={authOpen} timeout="auto" unmountOnExit>
+            <List component="div" disablePadding>
+              <ListItemButton sx={nestedListItemStyle}>
+                <ListItemIcon>
+                  <ManageSearchIcon sx={listIconStyle} />
+                </ListItemIcon>
+                <ListItemText
+                  slotProps={{
+                    primary: {
+                      sx: listTextStyle,
+                    },
+                  }}
+                  primary="View Bookings"
+                />
+              </ListItemButton>
+
+              <ListItemButton sx={nestedListItemStyle}>
+                <ListItemIcon>
+                  <ScheduleIcon sx={listIconStyle} />
+                </ListItemIcon>
+                <ListItemText
+                  slotProps={{
+                    primary: {
+                      sx: listTextStyle,
+                    },
+                  }}
+                  primary="Timeslots"
+                />
+              </ListItemButton>
+            </List>
+          </Collapse>
         </List>
         <Divider />
         <List>
           <ListItem disablePadding>
             <ListItemButton sx={listItemStyle} onClick={toggleAuthDropdown}>
               <ListItemIcon>
-                <Lock />
+                <Lock sx={listIconStyle} />
               </ListItemIcon>
-              {open && <ListItemText primary="Authentication" />}
+              {open && (
+                <ListItemText
+                  slotProps={{
+                    primary: {
+                      sx: listTextStyle,
+                    },
+                  }}
+                  primary="Authentication"
+                />
+              )}
               {open && (authOpen ? <ExpandLess /> : <ExpandMore />)}
             </ListItemButton>
           </ListItem>
 
           <Collapse in={authOpen} timeout="auto" unmountOnExit>
             <List component="div" disablePadding>
-              <ListItemButton sx={{ pl: 4 }}>
+              <ListItemButton sx={nestedListItemStyle}>
                 <ListItemIcon>
-                  <AdminPanelSettings />
+                  <Person sx={listIconStyle} />
                 </ListItemIcon>
-                <ListItemText primary="All Admins" />
+                <ListItemText
+                  slotProps={{
+                    primary: {
+                      sx: listTextStyle,
+                    },
+                  }}
+                  primary="All Users"
+                />
               </ListItemButton>
-
-              <ListItemButton sx={{ pl: 4 }}>
+              <ListItemButton sx={nestedListItemStyle}>
                 <ListItemIcon>
-                  <PersonAdd />
+                  <AdminPanelSettings sx={listIconStyle} />
                 </ListItemIcon>
-                <ListItemText primary="Admin Register" />
+                <ListItemText
+                  slotProps={{
+                    primary: {
+                      sx: listTextStyle,
+                    },
+                  }}
+                  primary="All Admins"
+                />
+              </ListItemButton>
+              <ListItemButton sx={nestedListItemStyle}>
+                <ListItemIcon>
+                  <PersonAdd sx={listIconStyle} />
+                </ListItemIcon>
+                <ListItemText
+                  slotProps={{
+                    primary: {
+                      sx: listTextStyle,
+                    },
+                  }}
+                  primary="Admin Register"
+                />
               </ListItemButton>
             </List>
           </Collapse>
           <ListItem disablePadding>
             <ListItemButton sx={listItemStyle}>
               <ListItemIcon>
-                <SettingsIcon /> 
+                <SettingsIcon sx={listIconStyle} />
               </ListItemIcon>
-              {open && <ListItemText primary="Settings" />}
+              {open && (
+                <ListItemText
+                  slotProps={{
+                    primary: {
+                      sx: listTextStyle,
+                    },
+                  }}
+                  primary="Settings"
+                />
+              )}
             </ListItemButton>
           </ListItem>
         </List>
