@@ -10,6 +10,8 @@ import ViewBooking from "../views/user/ViewBooking";
 import Login from "../views/Auth/Login";
 import Register from "../views/Auth/Register";
 import AdminReg from "../views/Auth/AdminReg";
+import { Dashboard } from "../views/Admin/Dashboard";
+
 export const authRouter = createBrowserRouter([ 
   {
     path: "/",
@@ -42,7 +44,11 @@ export const authRouter = createBrowserRouter([
       {
         path:"/admin/register",
         element: <AdminReg/>,
-      }
+      },
+      {
+        path: "/admin/dashboard",
+        element: <Dashboard />,
+      },
     ],
   },
 ]);

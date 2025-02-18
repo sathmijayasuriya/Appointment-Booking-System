@@ -59,7 +59,7 @@ const Login = () => {
 
   return (
     <Container sx={{ alignItems: "center", display: "flex", minHeight: "90vh" }}>
-      <Card sx={{ maxWidth: 400, mx: "auto", boxShadow: "0 4px 30px rgba(0, 0, 0, 0.1)" }}>
+      <Card sx={{ padding:3,borderRadius:5,maxWidth: 400, mx: "auto", boxShadow: "0 4px 30px rgba(0, 0, 0, 0.1)" }}>
         <CardContent sx={{ mx: 3, my: 3 }}>
           <Typography variant="h5" component="div" sx={{ textAlign: "center", mb: 2 }}>
             Welcome back
