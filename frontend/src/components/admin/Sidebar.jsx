@@ -90,27 +90,12 @@ export const Sidebar = () => {
               <ListItemIcon>
                 <Menu sx={listIconStyle} />
               </ListItemIcon>
-              {open && <ListItemText primary="BookAPP" />}
+              {open && <ListItemText primary="Admin" />}
             </ListItemButton>
           </ListItem>
         </List>
         <Divider />
         <List>
-          {/* <List>
-          {[
-            { text: "Dashboard", icon: <Dashboard sx={listIconStyle}  /> },
-            { text: "Calendar", icon: <CalendarToday sx={listIconStyle}  /> },
-            { text: "All users", icon: <Person sx={listIconStyle}  /> },
-          ].map((item, index) => (
-            <ListItem key={index} disablePadding>
-              <ListItemButton sx={listItemStyle}>
-                <ListItemIcon>{item.icon}</ListItemIcon>
-                {open && <ListItemText primary={item.text} />}
-              </ListItemButton>
-            </ListItem>
-          ))}
-        </List> */}
-
           <ListItem disablePadding>
             <ListItemButton sx={listItemStyle}>
               <ListItemIcon>

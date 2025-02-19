@@ -11,6 +11,8 @@ import Login from "../views/Auth/Login";
 import Register from "../views/Auth/Register";
 import AdminReg from "../views/Auth/AdminReg";
 import { Dashboard } from "../views/Admin/Dashboard";
+import { ManageSlots } from "../views/Admin/ManageSlots";
+import { ViewAppointments } from "../views/Admin/ViewAppointments";
 
 export const authRouter = createBrowserRouter([ 
   {
@@ -49,6 +51,14 @@ export const authRouter = createBrowserRouter([
         path: "/admin/dashboard",
         element: <Dashboard />,
       },
+      {
+        path: "/admin/manage-slots",
+        element: <ManageSlots />,
+      },
+      {
+        path:"/admin/ViewBooking",
+        element: <ViewAppointments />,
+      }
     ],
   },
 ]);
