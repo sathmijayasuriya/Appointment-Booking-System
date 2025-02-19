@@ -6,7 +6,7 @@ export const Dashboard = () => {
   return (
     <Box sx={{ display: "flex" }}>
       <Sidebar />
-      <Box component="main" sx={{ flexGrow: 1, pl: 5,mt:20 }}>
+      <Box component="main" sx={{ flexGrow: 1, pl: 4,mt:10 }}>
         <HeaderAdmin/>
         <Typography variant="h4">Dashboard</Typography>
         <Typography>Welcome to the Admin Dashboard</Typography>

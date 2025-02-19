@@ -27,6 +27,11 @@ export const AdminMenu = () => {
     const handleClose = () => {
       setAnchorEl(null);
     };
+    const buttonStyle = {
+            color: "#344054",
+            "&:hover": {
+               color: "#14AE5C",
+            }, }
   return (
     <>
     <Box sx={{ display: "flex", alignItems: "center", textAlign: "center" }}>
@@ -59,6 +64,7 @@ export const AdminMenu = () => {
             overflow: "visible",
             filter: "drop-shadow(0px 2px 8px rgba(0,0,0,0.32))",
             mt: 1.5,
+           
             "& .MuiAvatar-root": {
               width: 32,
               height: 32,
@@ -82,14 +88,14 @@ export const AdminMenu = () => {
         transformOrigin={{ horizontal: "right", vertical: "top" }}
         anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
       >
-        <MenuItem component={Link} to={"/"}>
+        <MenuItem sx={buttonStyle} component={Link} to={"/"}>
           Home
         </MenuItem>
-        <MenuItem component={Link} to={"/prescriptions/my-prescriptions"}>
+        <MenuItem sx={buttonStyle} component={Link} to={"/prescriptions/my-prescriptions"}>
           Edit profile
         </MenuItem>
-        <MenuItem onClick={handleClose} component={Link} to={"/user/account"}>Account</MenuItem>
-        <MenuItem onClick={(e) => onClickLogOut(e)}>
+        <MenuItem sx={buttonStyle} onClick={handleClose} component={Link} to={"/user/account"}>Account</MenuItem>
+        <MenuItem sx={buttonStyle} onClick={(e) => onClickLogOut(e)}>
           {/* <ListItemIcon><Logout fontSize="small" /></ListItemIcon> */}
           Logout
         </MenuItem>

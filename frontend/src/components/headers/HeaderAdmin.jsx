@@ -18,7 +18,7 @@ export default function HeaderAdmin() {
       >
         <Toolbar>
           <Box component={Link} to={"/"}>
-            <img alt="Logo" src={Logo} height={20} />
+            <img alt="Logo" src={Logo} height={15} />
           </Box>
           <Typography component="div" sx={{ flexGrow: 1 }}></Typography>
 
