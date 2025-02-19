@@ -45,7 +45,7 @@ export const AdminMenu = () => {
             aria-expanded={open ? "true" : undefined}
           >
             <Avatar
-              alt={user?.fullName}
+              alt={user?.Name}
               src={user?.photoURL}
               sx={{ width: 32, height: 32 }}
             />

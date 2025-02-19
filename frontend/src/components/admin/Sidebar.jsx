@@ -43,7 +43,7 @@ export const Sidebar = () => {
   
   const listItemStyle = {
     my: 1, // Vertical margin for spacing
-    ml: 3,
+    ml: 1,
     color: "#344054",
     "&:hover": {
       backgroundColor: "#e3f2fd",
