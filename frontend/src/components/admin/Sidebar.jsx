@@ -33,10 +33,14 @@ export const Sidebar = () => {
   const toggleDrawer = () => {
     setOpen(!open);
   };
-  const toggleAuthDropdown = () => {
+  const toggleAppointmentsDropdown = () => {
     setAppointmentsOpen(!appointmentsOpen);
+  };
+  
+  const toggleAuthDropdown = () => {
     setAuthOpen(!authOpen);
   };
+  
   const listItemStyle = {
     my: 1, // Vertical margin for spacing
     ml: 3,
@@ -57,7 +61,7 @@ export const Sidebar = () => {
   };
   const listIconStyle = {
     fontSize: 17,
-    color: "#344054",
+    color: "#8C93A3",
     ml: 2,
   };
   const listTextStyle = {
@@ -141,9 +145,9 @@ export const Sidebar = () => {
               )}
             </ListItemButton>
           </ListItem>
-
+          {/* appointments */}
           <ListItem disablePadding>
-            <ListItemButton sx={listItemStyle} onClick={toggleAuthDropdown}>
+            <ListItemButton sx={listItemStyle} onClick={toggleAppointmentsDropdown}>
               <ListItemIcon>
                 <EditCalendarIcon sx={listIconStyle} />
               </ListItemIcon>
@@ -157,10 +161,10 @@ export const Sidebar = () => {
                   primary="Appointments"
                 />
               )}
-              {open && (authOpen ? <ExpandLess /> : <ExpandMore />)}
+              {open && (appointmentsOpen ? <ExpandLess /> : <ExpandMore />)}
             </ListItemButton>
           </ListItem>
-          <Collapse in={authOpen} timeout="auto" unmountOnExit>
+          <Collapse in={appointmentsOpen} timeout="auto" unmountOnExit>
             <List component="div" disablePadding>
               <ListItemButton sx={nestedListItemStyle}>
                 <ListItemIcon>

@@ -21,10 +21,17 @@ import {
 import { display } from "@mui/system";
 import axios from "axios";
 import { useSelector } from "react-redux";
+import FileDownloadOutlinedIcon from '@mui/icons-material/FileDownloadOutlined';
 
 const buttonStyle = {
   border: "2px solid #14AE5C",
   color: "#14AE5C",
+  paddingX: "20px",
+  borderRadius: "10px",
+};
+const exportButton = {
+  border: "2px solid rgb(212, 228, 219)",
+  color: "black",
   paddingX: "20px",
   borderRadius: "10px",
 };
@@ -78,23 +85,29 @@ export default function ViewBooking() {
             {buttonLabels.map((label) => (
               <Button
                 key={label}
-                sx = {{
-                    color: "#606060",   //text color 
-                    border: "none",
-                    borderBottom: "2px solid transparent", // Default bottom border (invisible)
-                    borderRadius: 0, // Ensure straight edges
-                    paddingX: 2, // Adjust horizontal padding to maintain spacing
-                    "&:hover": {
-                      borderBottom: "2px solid #0F4C81",
-                      backgroundColor:"transparent",
-                    }
+                sx={{
+                  color: "#606060", //text color
+                  border: "none",
+                  borderBottom: "2px solid transparent", // Default bottom border (invisible)
+                  borderRadius: 0, // Ensure straight edges
+                  paddingX: 2, // Adjust horizontal padding to maintain spacing
+                  "&:hover": {
+                    borderBottom: "2px solid #14AE5C",
+                    backgroundColor: "transparent",
+                  },
                 }}
               >
                 {label}
               </Button>
             ))}
           </Box>
-
+          <Box sx={{ display: "flex", alignItems: "center" }}>
+            <Button sx={exportButton}>
+              {" "}
+              <FileDownloadOutlinedIcon sx={{fontSize:"20px",mr:1}}/>
+              Export
+            </Button>
+          </Box>
         </Box>
         <Box sx={{ marginTop: "20px" }}>
           <TableContainer component={Paper}>
