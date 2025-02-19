@@ -24,8 +24,10 @@ import SettingsIcon from "@mui/icons-material/Settings";
 import ScheduleIcon from "@mui/icons-material/Schedule";
 import ManageSearchIcon from "@mui/icons-material/ManageSearch";
 import EditCalendarIcon from "@mui/icons-material/EditCalendar";
-import { fontWeight } from "@mui/system";
+import { useNavigate } from "react-router-dom";
 export const Sidebar = () => {
+
+  const navigate = useNavigate();
   const [open, setOpen] = useState(true);
   const [authOpen, setAuthOpen] = useState(false);
   const [appointmentsOpen, setAppointmentsOpen] = useState(false);
@@ -97,7 +99,7 @@ export const Sidebar = () => {
         <Divider />
         <List>
           <ListItem disablePadding>
-            <ListItemButton sx={listItemStyle}>
+            <ListItemButton sx={listItemStyle} onClick={()=>navigate("/admin/dashboard")}>
               <ListItemIcon>
                 <Dashboard sx={listIconStyle} />
               </ListItemIcon>
@@ -114,7 +116,7 @@ export const Sidebar = () => {
             </ListItemButton>
           </ListItem>
           <ListItem disablePadding>
-            <ListItemButton sx={listItemStyle}>
+            <ListItemButton sx={listItemStyle} >
               <ListItemIcon>
                 <CalendarToday sx={listIconStyle} />
               </ListItemIcon>
@@ -165,7 +167,7 @@ export const Sidebar = () => {
                 />
               </ListItemButton>
 
-              <ListItemButton sx={nestedListItemStyle}>
+              <ListItemButton sx={nestedListItemStyle} onClick={()=>navigate("/admin/manage-slots")}>
                 <ListItemIcon>
                   <ScheduleIcon sx={listIconStyle} />
                 </ListItemIcon>
