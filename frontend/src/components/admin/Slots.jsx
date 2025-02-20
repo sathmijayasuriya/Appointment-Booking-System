@@ -18,12 +18,13 @@ import {
   Paper,
 } from "@mui/material";
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
-import { LocalizationProvider, StaticDatePicker } from "@mui/x-date-pickers";
+import { LocalizationProvider, StaticDatePicker,PickersActionBar } from "@mui/x-date-pickers";
 import dayjs from "dayjs";
 import TimePicker from "@ashwinthomas/react-time-picker-dropdown";
 import "react-time-picker/dist/TimePicker.css";
 import ModeEditOutlineOutlinedIcon from '@mui/icons-material/ModeEditOutlineOutlined';
 import DeleteOutlinedIcon from '@mui/icons-material/DeleteOutlined';
+
 
 export const Slots = () => {
   const [selectedDate, setSelectedDate] = useState(dayjs());
@@ -81,7 +82,7 @@ export const Slots = () => {
           borderRadius: 2,
           boxShadow: "none",
           marginX: 25,
-          mt: 5,
+          mt: 2,
           display: "flex",
           justifyContent: "center",
           gap: 10,
@@ -110,6 +111,15 @@ export const Slots = () => {
               onChange={(newValue) => setSelectedDate(newValue)}
               disablePast
               views={["year", "month", "day"]}
+              slots={{
+                actionBar: PickersActionBar,
+              }}
+              slotProps={{
+                actionBar: {
+                  actions: ["clear"],
+                  onClear: () => setSelectedDate(dayjs()), // Reset to present date
+                },
+              }}          
               sx={{
                 width: "100%",
                 "& .MuiPickersYear-yearButton": {
@@ -159,7 +169,7 @@ export const Slots = () => {
                   fontWeight: "bold",
                   marginX: "5px",
                 }, // Change font size here
-              }}
+               }}
             />
           </LocalizationProvider>
         </Box>
