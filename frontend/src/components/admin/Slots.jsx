@@ -18,9 +18,12 @@ import {
   Paper,
 } from "@mui/material";
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
-import { TimePicker } from '@mui/x-date-pickers/TimePicker';
 import { LocalizationProvider, StaticDatePicker } from "@mui/x-date-pickers";
 import dayjs from "dayjs";
+import TimePicker from "@ashwinthomas/react-time-picker-dropdown";
+import "react-time-picker/dist/TimePicker.css";
+import ModeEditOutlineOutlinedIcon from '@mui/icons-material/ModeEditOutlineOutlined';
+import DeleteOutlinedIcon from '@mui/icons-material/DeleteOutlined';
 
 export const Slots = () => {
   const [selectedDate, setSelectedDate] = useState(dayjs());
@@ -50,6 +53,9 @@ export const Slots = () => {
       backgroundColor: "rgb(21, 22, 21)",
     },
   };
+  const [startTime, setStartTime] = useState("10:00");
+  const [endTime, setEndTime] = useState("10:30");
+
   return (
     <>
       <Box
@@ -57,10 +63,13 @@ export const Slots = () => {
           display: "flex",
           justifyContent: "space-between",
           alignItems: "center",
-          marginRight: 17,
+          // marginRight: 17,
+          // backgroundColor:"red",
+          p:5,  
+          mx:10
         }}
       >
-        <Typography variant="h5" sx={{ pl: 3, mt: 5 }}>
+        <Typography variant="h5">
           Manage Time-Slots
         </Typography>
         <Button sx={buttonStyle}>+ Add Time-Slot</Button>
@@ -71,10 +80,11 @@ export const Slots = () => {
           pb: 2,
           borderRadius: 2,
           boxShadow: "none",
-          marginX: 20,
+          marginX: 25,
           mt: 5,
           display: "flex",
           justifyContent: "center",
+          gap: 10,
         }}
       >
         <Box
@@ -173,28 +183,29 @@ export const Slots = () => {
           <Typography variant="h6" sx={{ mt: 15, color: "#344054" }}>
             Slot Details
           </Typography>
-          {Object.keys(formData).map((field) => (
-            <TextField
-              key={field}
-              fullWidth
-              label={field.replace(/\b\w/g, (l) => l.toUpperCase())}
-              name={field}
-              //   value={formData[field]}
-              //   onChange={handleChange}
-              margin="normal"
-              required
-              sx={{
-                borderRadius: 3,
-              }}
+          <Box sx={{ mt: 2, display: "flex", justifyContent: "space-between" ,gap:4}}>
+            <TimePicker
+              defaultValue="00 : 00: 00 am"
+              placeholder="hh : mm : ss a"
+              useTwelveHourFormat={true}
+              showClockIcon={true}
+              showCloseIcon={true}
+              allowBackdrop={true}
             />
-          ))}
-        {/* <TimePicker label="Basic time picker" /> */}
-
+            <TimePicker
+              defaultValue="00 : 00: 00 am"
+              placeholder="hh : mm : ss a"
+              useTwelveHourFormat={true}
+              showClockIcon={true}
+              showCloseIcon={true}
+              allowBackdrop={true}
+            />
+          </Box>
           <Box sx={{ display: "flex", justifyContent: "right" }}>
             <Button
               variant="outlined"
               sx={{
-                width: "20%",
+                width: "auto",
                 mt: 2,
                 // bgcolor: "white",
                 border: "2px solid #14AE5C",

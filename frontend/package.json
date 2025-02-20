@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@ashwinthomas/react-time-picker-dropdown": "^1.0.5",
     "@date-io/date-fns": "^3.0.0",
     "@emotion/react": "^11.13.5",
     "@emotion/styled": "^11.13.5",
@@ -22,6 +23,7 @@
     "react-router-dom": "^6.28.0",
     "react-scripts": "5.0.1",
     "react-slick": "^0.30.3",
+    "react-time-picker": "^7.0.0",
     "react-toastify": "^10.0.6",
     "redux": "^5.0.1",
     "slick-carousel": "^1.8.1"
