@@ -57,7 +57,7 @@ export default function ViewBooking() {
   return (
     <>
       <Box
-        sx={{ mt: 18, px: 5, maxWidth: "1400px", mx: "auto", height: "100%" }}
+        sx={{ mt: 18, mx:20 }}
       >
         <Typography variant="body1" color="textSecondary">
           See your scheduled appointments from your calender events links.
@@ -109,7 +109,7 @@ export default function ViewBooking() {
             </Button>
           </Box>
         </Box>
-        <Box sx={{ marginTop: "20px" }}>
+        <Box sx={{ marginTop: "20px",backgroundColor:"red" }}>
           <TableContainer component={Paper}>
             <Table>
               <TableHead>

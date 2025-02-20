@@ -174,7 +174,7 @@ export const Slots = () => {
             Slot Details
           </Typography>
           {Object.keys(formData).map((field) => (
-            <TimePicker
+            <TextField
               key={field}
               fullWidth
               label={field.replace(/\b\w/g, (l) => l.toUpperCase())}
@@ -188,6 +188,8 @@ export const Slots = () => {
               }}
             />
           ))}
+        {/* <TimePicker label="Basic time picker" /> */}
+
           <Box sx={{ display: "flex", justifyContent: "right" }}>
             <Button
               variant="outlined"

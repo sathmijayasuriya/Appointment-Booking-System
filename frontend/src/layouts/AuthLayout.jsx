@@ -15,7 +15,7 @@ export default function AuthLayout() {
         alignItems="stretch"
         sx={{
           height: "100%",
-          minHeight: "calc(100vh - 64px)",
+          // minHeight: "calc(100vh - 64px)",
           bgcolor: "#F2F2F7",
         }}
       >
