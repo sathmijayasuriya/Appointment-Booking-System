@@ -7,9 +7,8 @@ export const ManageSlots = () => {
   return (
       <Box sx={{ display: "flex" }}>
         <Sidebar />
-        <Box component="main" sx={{ flexGrow: 1, pl: 4,mt:10 }}>
+        <Box component="main" sx={{ flexGrow: 1,mt:10 }}>
           <HeaderAdmin/>
-          <Typography variant="h5" sx={{ pl: 3,mt:2}} >Manage Time-Slots</Typography>
           <Slots/>
         </Box>
       </Box>
