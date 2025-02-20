@@ -24,11 +24,14 @@ import TimePicker from "@ashwinthomas/react-time-picker-dropdown";
 import "react-time-picker/dist/TimePicker.css";
 import ModeEditOutlineOutlinedIcon from '@mui/icons-material/ModeEditOutlineOutlined';
 import DeleteOutlinedIcon from '@mui/icons-material/DeleteOutlined';
+import { TimeField } from '@mui/x-date-pickers/TimeField';
+import { DemoContainer } from '@mui/x-date-pickers/internals/demo';
+
 
 
 export const Slots = () => {
-  const [selectedDate, setSelectedDate] = useState(dayjs());
 
+  const [selectedDate, setSelectedDate] = useState(dayjs());
   const [formData, setFormData] = useState({
     name: "Sathmi Jayasuriya",
     email: "sathmijayasuriya@gmail.com",
@@ -54,9 +57,9 @@ export const Slots = () => {
       backgroundColor: "rgb(21, 22, 21)",
     },
   };
+
   const [startTime, setStartTime] = useState("10:00");
   const [endTime, setEndTime] = useState("10:30");
-
   return (
     <>
       <Box
@@ -195,7 +198,9 @@ export const Slots = () => {
           </Typography>
           <Box sx={{ mt: 2, display: "flex", justifyContent: "space-between" ,gap:4}}>
             <TimePicker
-              defaultValue="00 : 00: 00 am"
+              // onChange={handleTimeChange}
+              // value={startTime}
+              // defaultValue="00 : 00: 00 am"
               placeholder="hh : mm : ss a"
               useTwelveHourFormat={true}
               showClockIcon={true}
@@ -210,6 +215,7 @@ export const Slots = () => {
               showCloseIcon={true}
               allowBackdrop={true}
             />
+ 
           </Box>
           <Box sx={{ display: "flex", justifyContent: "right" }}>
             <Button

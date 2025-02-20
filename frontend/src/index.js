@@ -7,7 +7,7 @@ import { ThemeProvider } from "@mui/system";
 import { Provider } from "react-redux";
 import { store } from "./Redux/store";
 import Theme from "./Theme/Theme";
-
+  import { LocalizationProvider } from "@mui/x-date-pickers";
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>

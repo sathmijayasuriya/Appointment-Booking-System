@@ -153,7 +153,7 @@ export const Sidebar = () => {
           </ListItem>
           <Collapse in={appointmentsOpen} timeout="auto" unmountOnExit>
             <List component="div" disablePadding>
-              <ListItemButton sx={nestedListItemStyle}>
+              <ListItemButton sx={nestedListItemStyle} onClick={()=>navigate("/admin/ViewBooking")}>
                 <ListItemIcon>
                   <ManageSearchIcon sx={listIconStyle} />
                 </ListItemIcon>
