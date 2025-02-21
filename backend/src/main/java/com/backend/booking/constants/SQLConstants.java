@@ -63,7 +63,7 @@ public class SQLConstants {
     public static final String UPDATE_COMPLETED_APPOINTMENTS =
             "UPDATE appointments SET status = 'COMPLETED' " +
                     "WHERE status = 'BOOKED' AND slot_id IN " +
-                    "(SELECT slot_id FROM timeslots WHERE date < CURDATE() OR (date = CURDATE() AND end_time <= NOW()))";
+                    "(SELECT slot_id FROM time_slots WHERE date < CURDATE() OR (date = CURDATE() AND end_time <= NOW()))";
 
 
    //No-show appointments: Manually mark as 'NO_SHOW' if admin updates
