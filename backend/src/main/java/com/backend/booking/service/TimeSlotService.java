@@ -83,10 +83,10 @@ public class TimeSlotService {
     public Boolean deleteSlot(Long slotId){
         // Check if the slot exists
         Long sid = timeSlotDAO.getSlotById(slotId);
+        System.out.println("slot id is :"+sid);
         if (sid == null) {
             throw new IllegalArgumentException("Slot not found.");
         }
-
         // status of the slot from the appointments table
         String status = appointmentDAO.getTimeSlotStatus(slotId);
 
@@ -94,14 +94,12 @@ public class TimeSlotService {
         if (status != null && status.equals("BOOKED")) {
             throw new IllegalArgumentException("Cannot delete a slot that is already booked.");
         }
-
-        // If the status is INACTIVE or AVAILABLE
         if ("INACTIVE".equals(status) || "AVAILABLE".equals(status)) {
             boolean success = timeSlotDAO.deleteSlot(slotId);
             if (!success) {
                 throw new IllegalArgumentException("Failed to delete the slot.");
             }
-            return true; // Return true
+            return true;
         } else {
             throw new IllegalArgumentException("Cannot delete a slot that is in use.");
         }

@@ -105,8 +105,8 @@ public class TimeSlotDAO {
         return updatedRows>0;
     }
     public Long getSlotById(Long slotId) {
-        Long slotid = jdbcTemplate.queryForObject(SQLConstants.GET_SLOT_BY_ID, Long.class);
+        Long slotid = jdbcTemplate.queryForObject(SQLConstants.GET_SLOT_BY_ID, Long.class,slotId);
         return slotid;
     }
-    
+
 }
