@@ -6,6 +6,7 @@ import com.backend.booking.dto.AppointmentReqDTO;
 import com.backend.booking.dto.AppointmentUserResDTO;
 import com.backend.booking.exceptions.UnauthorizedException;
 import com.backend.booking.service.AppointmentService;
+import com.backend.booking.service.AuthService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +22,8 @@ import java.util.List;
 public class AppointmentController {
     @Autowired
     private AppointmentService appointmentService;
+    @Autowired
+    private AuthService authService;
     private static final Logger logger = LoggerFactory.getLogger(AppointmentController.class);
 
 
@@ -57,7 +60,7 @@ public class AppointmentController {
     @PutMapping("/markNoShow/{appointmentId}")
     public ResponseEntity<String> markNoShow(@PathVariable Long appointmentId, @RequestParam String adminEmail) {
         logger.info("request email and appointment id :  :"+adminEmail+" ,"+appointmentId);
-        if (!appointmentService.isAdmin(adminEmail)) {
+        if (!authService.isAdmin(adminEmail)) {
             return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Only admins can mark appointments as No Show.");
         }
         boolean updated = appointmentService.markAppointmentAsNoShow(appointmentId);
