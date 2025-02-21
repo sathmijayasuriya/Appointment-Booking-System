@@ -59,5 +59,17 @@ public class SQLConstants {
             "SELECT * FROM users WHERE user_id = ?";
     public static final String FIND_USER_PASSWORD_BY_EMAIL = "SELECT password_hash FROM users WHERE email = ?";
 
+    // completed appointments
+    public static final String UPDATE_COMPLETED_APPOINTMENTS =
+            "UPDATE appointments SET status = 'COMPLETED' " +
+                    "WHERE status = 'BOOKED' AND slot_id IN " +
+                    "(SELECT slot_id FROM timeslots WHERE date = CURDATE())";
+
+
+    public static final String UPDATE_NO_SHOW_APPOINTMENTS =
+            "UPDATE appointments SET status = 'NO_SHOW' " +
+                    "WHERE appointment_id = ? AND status = 'BOOKED' AND slot_id IN " +
+                    "(SELECT slot_id FROM time_slots WHERE date = CURDATE())";
+
 
 }

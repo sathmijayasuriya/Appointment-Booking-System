@@ -95,5 +95,14 @@ public class AppointmentDAO {
         }
     }
 
+    //completed appointments
+    public int updateCompletedAppointments() {
+        return jdbcTemplate.update(SQLConstants.UPDATE_COMPLETED_APPOINTMENTS);
+    }
+
+    public int updateNoShowAppointments(Long appointmentId) {
+        return jdbcTemplate.update(SQLConstants.UPDATE_NO_SHOW_APPOINTMENTS, appointmentId);
+    }
+
 
 }

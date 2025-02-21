@@ -73,5 +73,23 @@ public class AppointmentService {
         }
     }
 
+    //completed appointments
+    public void markCompletedAppointments() {
+        int updatedRows = appointmentDAO.updateCompletedAppointments();
+        System.out.println("Completed Appointments Updated: " + updatedRows);
+    }
+
+    public boolean isAdmin(String email) {
+        // Check if the user has the role of 'ADMIN'
+        String role = userDAO.findUserRoleByEmail(email);
+        return "ADMIN".equals(role);
+    }
+
+    public boolean markAppointmentAsNoShow(Long appointmentId) {
+        // Update the appointment status to NO_SHOW
+        int updatedRows = appointmentDAO.updateNoShowAppointments(appointmentId);
+        return updatedRows > 0;
+    }
+
 
 }

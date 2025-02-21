@@ -59,6 +59,21 @@ public class AppointmentController {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
         }
     }
+    @PutMapping("/markNoShow/{appointmentId}")
+    public ResponseEntity<String> markNoShow(@PathVariable Long appointmentId, @RequestParam String adminEmail) {
+        if (!appointmentService.isAdmin(adminEmail)) {
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Only admins can mark appointments as No Show.");
+        }
+
+        boolean updated = appointmentService.markAppointmentAsNoShow(appointmentId);
+
+        if (updated) {
+            return ResponseEntity.ok("Appointment marked as NO_SHOW successfully.");
+        } else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .body("Appointment not found or already updated.");
+        }
+    }
 
 
 }
