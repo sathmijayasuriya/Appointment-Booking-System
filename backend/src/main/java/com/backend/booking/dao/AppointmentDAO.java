@@ -104,5 +104,19 @@ public class AppointmentDAO {
         return jdbcTemplate.update(SQLConstants.UPDATE_NO_SHOW_APPOINTMENTS, appointmentId);
     }
 
+    //user accept new time slot
+    public int acceptRescheduledSlot(Long appointmentId, Long userId) {
+        return jdbcTemplate.update(SQLConstants.ACCEPT_RESCHEDULED_SLOT, appointmentId, userId);
+    }
+    public String getAppointmentStatus(Long appointmentId, Long userId) {
+        try {
+            return jdbcTemplate.queryForObject(SQLConstants.GET_APPOINTMENT_STATUS,
+                    new Object[]{appointmentId, userId}, String.class);
+        } catch (Exception e) {
+            return null;
+        }
+    }
+
+
 
 }

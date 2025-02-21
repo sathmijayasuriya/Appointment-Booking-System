@@ -7,6 +7,9 @@ import com.backend.booking.dto.AppointmentReqDTO;
 
 import com.backend.booking.dto.AppointmentUserResDTO;
 import com.backend.booking.exceptions.UnauthorizedException;
+import com.backend.booking.scheduler.AppointmentScheduler;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -22,6 +25,8 @@ public class AppointmentService {
 
     @Autowired
     private UserDAO userDAO;
+
+    private static final Logger logger = LoggerFactory.getLogger(AppointmentService.class);
 
     public void bookAppointment(AppointmentReqDTO appointmentReqDTO) {
 
@@ -61,12 +66,20 @@ public class AppointmentService {
         return appointmentDAO.getAppointmentsByUserId(userId);
     }
     public void cancelAppointment(String email, Long appointmentId) {
-        // Get user ID using email
         Long userId = userDAO.findUserIdByEmail(email);
+        logger.info("user id :"+userId);
         if (userId == null) {
             throw new IllegalArgumentException("User not found.");
         }
+        String status = appointmentDAO.getAppointmentStatus(appointmentId,userId);
+        logger.info("status  :"+status);
 
+        if (status == null) {
+            throw new IllegalArgumentException("Appointment not found or status is invalid.");
+        }
+        if (!status.equals("PENDING_RESCHEDULE") && !status.equals("BOOKED")) {
+            throw new IllegalArgumentException("Only BOOKED or PENDING_RESCHEDULE appointments can be cancelled.");
+        }
         boolean success = appointmentDAO.cancelAppointment(userId, appointmentId);
         if (!success) {
             throw new IllegalArgumentException("Appointment not found or already cancelled.");
@@ -89,6 +102,15 @@ public class AppointmentService {
         // Update the appointment status to NO_SHOW
         int updatedRows = appointmentDAO.updateNoShowAppointments(appointmentId);
         return updatedRows > 0;
+    }
+
+    // accept new slot by user
+    public boolean acceptSlot(String email, Long appointmentId) {
+        Long userId = userDAO.findUserIdByEmail(email);
+        if (userId == null) {
+            throw new IllegalArgumentException("User not found.");
+        }
+        return appointmentDAO.acceptRescheduledSlot(appointmentId, userId) > 0;
     }
 
 

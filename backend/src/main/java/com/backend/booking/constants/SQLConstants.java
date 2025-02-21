@@ -72,4 +72,9 @@ public class SQLConstants {
                     "WHERE appointment_id = ? AND status = 'BOOKED'";
 
 
+    //user Accept new time slot
+    public static final String ACCEPT_RESCHEDULED_SLOT =
+            "UPDATE appointments SET status = 'RESCHEDULED' WHERE appointment_id = ? AND user_id = ?";
+
+    public static final String GET_APPOINTMENT_STATUS = "SELECT status from appointments WHERE appointment_id = ? AND user_id = ?";
 }
