@@ -48,7 +48,6 @@ public class AppointmentService {
     }
 
     public List<AppointmentAdminResDTO> getAllAppointments(String userEmail) {
-        // Check if the user is an admin
         String role = userDAO.findUserRoleByEmail(userEmail);
         if (!"ADMIN".equals(role)) {
             throw new UnauthorizedException("Access denied. Only admins can view appointments.");
@@ -92,12 +91,6 @@ public class AppointmentService {
         System.out.println("Completed Appointments Updated: " + updatedRows);
     }
 
-    public boolean isAdmin(String email) {
-        // Check if the user has the role of 'ADMIN'
-        String role = userDAO.findUserRoleByEmail(email);
-        return "ADMIN".equals(role);
-    }
-
     public boolean markAppointmentAsNoShow(Long appointmentId) {
         // Update the appointment status to NO_SHOW
         int updatedRows = appointmentDAO.updateNoShowAppointments(appointmentId);
@@ -112,6 +105,8 @@ public class AppointmentService {
         }
         return appointmentDAO.acceptRescheduledSlot(appointmentId, userId) > 0;
     }
+
+
 
 
 }
