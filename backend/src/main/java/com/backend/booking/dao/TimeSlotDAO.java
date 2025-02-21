@@ -100,5 +100,13 @@ public class TimeSlotDAO {
             );
         }
     }
-
+    public boolean deleteSlot(Long slotId){
+        int updatedRows = jdbcTemplate.update(SQLConstants.DELETE_SLOT,slotId);
+        return updatedRows>0;
+    }
+    public Long getSlotById(Long slotId) {
+        Long slotid = jdbcTemplate.queryForObject(SQLConstants.GET_SLOT_BY_ID, Long.class);
+        return slotid;
+    }
+    
 }

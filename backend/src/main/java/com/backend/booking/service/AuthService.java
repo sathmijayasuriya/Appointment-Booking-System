@@ -68,5 +68,9 @@ public class AuthService {
     public UserResponseDTO getUserByEmail(String email) {
         return userDAO.findUserByEmail(email);
     }
+    public boolean isAdmin(String email) {
+        String role = userDAO.findUserRoleByEmail(email);
+        return "ADMIN".equals(role);
+    }
 
 }

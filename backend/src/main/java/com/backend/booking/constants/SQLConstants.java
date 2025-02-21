@@ -77,4 +77,8 @@ public class SQLConstants {
             "UPDATE appointments SET status = 'RESCHEDULED' WHERE appointment_id = ? AND user_id = ?";
 
     public static final String GET_APPOINTMENT_STATUS = "SELECT status from appointments WHERE appointment_id = ? AND user_id = ?";
+
+    //delete slot by admin if status is available
+    public static final String DELETE_SLOT = "DELETE FROM time_slots WHERE slot_id = ?";
+    public static final String GET_SLOT_BY_ID = "SELECT * FROM time_slots WHERE slot_id = ?";
 }

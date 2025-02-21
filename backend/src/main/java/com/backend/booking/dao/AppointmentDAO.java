@@ -20,7 +20,6 @@ public class AppointmentDAO {
     public void addAppointment(Long userId, Long slotId, String bookingForName, String bookingForEmail, String bookingForContact) {
         jdbcTemplate.update(SQLConstants.INSERT_APPOINTMENT, userId, slotId,bookingForName, bookingForEmail, bookingForContact);
     }
-
     // Update time slot status
     public void updateTimeSlotStatus(Long slotId) {
         jdbcTemplate.update(SQLConstants.UPDATE_TIME_SLOT_STATUS_BOOKED, slotId);
@@ -75,7 +74,6 @@ public class AppointmentDAO {
         if (slotId == null) {
             return false; // Appointment not found or not owned by user
         }
-
         // Cancel the appointment
         int updatedRows = jdbcTemplate.update(SQLConstants.CANCEL_APPOINTMENT, appointmentId, userId);
         if (updatedRows > 0) {
@@ -85,7 +83,6 @@ public class AppointmentDAO {
         }
         return false;
     }
-
     // Get slot_id from appointment
     public Long getAppointmentSlotId(Long userId, Long appointmentId) {
         try {
@@ -94,7 +91,6 @@ public class AppointmentDAO {
             return null;
         }
     }
-
     //completed appointments
     public int updateCompletedAppointments() {
         return jdbcTemplate.update(SQLConstants.UPDATE_COMPLETED_APPOINTMENTS);
@@ -116,6 +112,7 @@ public class AppointmentDAO {
             return null;
         }
     }
+
 
 
 
